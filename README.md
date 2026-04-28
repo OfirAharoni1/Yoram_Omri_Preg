@@ -22,8 +22,21 @@
 
 ---
 
+# Projects Overview
+
+| Project Name | Group     | Type | Country | 
+|--------------|----------|------|---------|
+| PRJNA1247940 | Pregnant  | WGS  |   China     | 
+| ERP020710    | Pregnant | WGS  |   China  |   
+| PRJEB37731    | Control  | WGS  |  Denmark  |   
+| PRJNA48479    | Control | WGS  |  USA   |          
+
+
+---
+
 # Reminders
 
 -  fig 1B - first building stackbar for each DS and then create the violin plot - the code for only stackbars is at archive folder.
 -  
 -  
+
