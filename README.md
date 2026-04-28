@@ -24,12 +24,17 @@
 
 # Projects Overview
 
-| Project Name | Group     | Type | Country | 
-|--------------|----------|------|---------|
-| PRJNA1247940 | Pregnant  | WGS  |   China     | 
-| ERP020710    | Pregnant | WGS  |   China  |   
-| PRJEB37731    | Control  | WGS  |  Denmark  |   
-| PRJNA48479    | Control | WGS  |  USA   |          
+| Project Name | Group    | Type | Country | # Samples | 
+|--------------|----------|------|---------|---------|
+| PRJNA1247940 | Pregnant | WGS  | China   |         |
+| ERP020710    | Pregnant | WGS  | China   |        |
+| PRJEB37731   | Control  | WGS  | Denmark |        |
+| PRJNA48479   | Control  | WGS  | USA     |        |    
+| PRJNA1067170 | Control  | WGS  | USA     |   124  |    
+| PRJNA669650  | Control  | 16S  | Finland |  208   |    
+| PRJNA547806  | Control  | 16S  | USA     |  90    |    
+| PRJNA388263  | Control  | 16S  | USA     |  400   |    
+
 
 
 ---
