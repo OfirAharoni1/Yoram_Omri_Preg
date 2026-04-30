@@ -13,8 +13,8 @@ import pandas as pd
 import os
 
 # ===== SETTINGS =====
-file_path = r"Yoram_Omri_Preg/datasets_after_yamas/ERP020710_Pregnant_SG.csv"
-group_value = "Pregnant"   # or "Control"
+file_path = r"Yoram_Omri_Preg/datasets_after_yamas/PRJEB37731_Control_SG.csv"
+group_value = "Control"   # or "Control"
 
 # ===== LOAD =====
 df = pd.read_csv(file_path, skiprows=1, sep=",")

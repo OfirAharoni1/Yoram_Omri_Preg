@@ -55,7 +55,7 @@ all_data = pd.concat(all_data, ignore_index=True)
 
 
 # ======================
-# ציור הפיגר
+# create figure
 # ======================
 fig, ax = plt.subplots(figsize=(10, 6))
 
