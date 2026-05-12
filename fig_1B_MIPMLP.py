@@ -1,10 +1,33 @@
 import os
 import glob
 import warnings
+import traceback
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+
+# ===== PATCH FOR OLD MIPMLP CODE WITH NEW PANDAS =====
+
+_original_series_getitem = pd.Series.__getitem__
+
+def _patched_series_getitem(self, key):
+    if isinstance(key, int) and key not in self.index:
+        return self.iloc[key]
+    return _original_series_getitem(self, key)
+
+pd.Series.__getitem__ = _patched_series_getitem
+
+
+_original_index_str = pd.Index.str
+
+class _SafeStringAccessor:
+    def __get__(self, obj, cls=None):
+        if obj is None:
+            return self
+        return _original_index_str.__get__(obj.astype(str), cls)
+
+pd.Index.str = _SafeStringAccessor()
 
 import MIPMLP
 
@@ -12,14 +35,14 @@ import MIPMLP
 warnings.filterwarnings("ignore")
 
 # ===== SETTINGS =====
-input_folder = "/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas"
-output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots_mipmlp_clean"
+input_folder = "/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S"
+output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots/16S"
 os.makedirs(output_folder, exist_ok=True)
 
-# Change this if you want a different sorting taxon
 sort_taxon = "Bacteria;Verrucomicrobia"
 
-# ===== COLOR PALETTE (based on the original plotting code) =====
+
+# ===== COLOR PALETTE =====
 def create_color_palette():
     return {
         "Archaea;Euryarchaeota": "#535473",
@@ -39,19 +62,21 @@ def create_color_palette():
         "Bacteria;Verrucomicrobia": "#6B8AD7",
     }
 
+
 # ===== PROCESS ONE FILE =====
 def process_single_file(file_path: str) -> pd.DataFrame:
-    # Same loading pattern as the original code
-    df = pd.read_csv(file_path, index_col=0)
+    df = pd.read_csv(file_path)
 
-    # Critical: add taxonomy row from the column names before preprocess
-    df.loc["taxonomy"] = df.columns
+    # Ensure columns are strings for MIPMLP compatibility
+    df.columns = df.columns.astype(str)
+    
 
-    # Reset index and rename first column to ID
-    df = df.reset_index()
-    df = df.rename(columns={df.columns[0]: "ID"})
+    print("Before MIPMLP preprocess:")
+    print("Shape:", df.shape)
+    print("Columns first 5:", df.columns[:5].tolist())
+    print("Index first 5:", df.index[:5].tolist())
 
-    # Same preprocess call pattern as the original code
+
     df = MIPMLP.preprocess(
         df,
         taxnomy_group="mean",
@@ -62,7 +87,7 @@ def process_single_file(file_path: str) -> pd.DataFrame:
     # Keep numeric columns only
     df = df.select_dtypes(include="number")
 
-    # Remove zero-sum samples if any
+    # Remove zero-sum samples
     row_sums = df.sum(axis=1)
     df = df.loc[row_sums > 0]
 
@@ -72,7 +97,7 @@ def process_single_file(file_path: str) -> pd.DataFrame:
     # Convert to relative abundance (%)
     df = df.div(df.sum(axis=1), axis=0) * 100
 
-    # Keep only taxonomy level 2 columns (exactly one semicolon)
+    # Keep taxonomy level 2 columns only
     taxa_list = [taxa for taxa in df.columns if len(str(taxa).split(";")) == 2]
     df = df[taxa_list]
 
@@ -81,27 +106,31 @@ def process_single_file(file_path: str) -> pd.DataFrame:
 
     return df
 
+
 # ===== SORT SAMPLES =====
 def sort_samples(df: pd.DataFrame, target_taxon: str) -> pd.DataFrame:
     if target_taxon in df.columns:
         sorted_idx = df[target_taxon].sort_values(ascending=False).index
         return df.loc[sorted_idx]
 
-    # Fallback: sort by the most abundant taxon on average
     fallback_taxon = df.mean(axis=0).sort_values(ascending=False).index[0]
+    print(f"Sort taxon not found: {target_taxon}")
+    print(f"Sorting instead by: {fallback_taxon}")
+
     sorted_idx = df[fallback_taxon].sort_values(ascending=False).index
     return df.loc[sorted_idx]
+
 
 # ===== PLOT ONE FILE =====
 def plot_single_dataset(df: pd.DataFrame, file_name: str, output_folder: str) -> str:
     color_map = create_color_palette()
 
-    # Add fallback colors for taxa not explicitly listed
     extra_colors = (
         list(plt.cm.tab20.colors) +
         list(plt.cm.Set3.colors) +
         list(plt.cm.Pastel1.colors)
     )
+
     missing_taxa = [t for t in df.columns if t not in color_map]
     for i, taxa in enumerate(missing_taxa):
         color_map[taxa] = extra_colors[i % len(extra_colors)]
@@ -135,6 +164,7 @@ def plot_single_dataset(df: pd.DataFrame, file_name: str, output_folder: str) ->
     ax1.set_xlim(-0.5, len(df) - 0.5)
     ax1.set_xticks([])
     ax1.set_title("Samples", fontsize=14)
+
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
     ax1.spines["bottom"].set_visible(False)
@@ -160,11 +190,13 @@ def plot_single_dataset(df: pd.DataFrame, file_name: str, output_folder: str) ->
     ax2.set_xticks([0])
     ax2.set_xticklabels(["Average"], fontsize=12)
     ax2.set_title("Average", fontsize=14)
+
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
 
     # Legend
     handles = [Rectangle((0, 0), 1, 1, color=color_map[taxa]) for taxa in taxa_list]
+
     fig.legend(
         handles,
         taxa_list,
@@ -186,6 +218,7 @@ def plot_single_dataset(df: pd.DataFrame, file_name: str, output_folder: str) ->
 
     return out_path
 
+
 # ===== MAIN =====
 def main():
     csv_files = sorted(glob.glob(os.path.join(input_folder, "*.csv")))
@@ -193,17 +226,20 @@ def main():
 
     for file_path in csv_files:
         file_name = os.path.splitext(os.path.basename(file_path))[0]
-        print(f"Processing: {file_name}")
+        print(f"\nProcessing: {file_name}")
 
         try:
             df = process_single_file(file_path)
             df = sort_samples(df, sort_taxon)
             out_path = plot_single_dataset(df, file_name, output_folder)
             print(f"Saved: {out_path}")
-        except Exception as e:
-            print(f"Skipping {file_name}: {e}")
 
-    print("Done.")
+        except Exception as e:
+            print(f"Skipping {file_name}: {repr(e)}")
+            traceback.print_exc()
+
+    print("\nDone.")
+
 
 if __name__ == "__main__":
     main()

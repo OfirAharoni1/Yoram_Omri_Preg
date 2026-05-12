@@ -2,8 +2,13 @@
 
 - `1_set_cols_per_ds.py`  
   Input: csv from Yamas  
-  Output: formatted csv for the pipeline   
-  Note:  first column SampleId, second group (Pregnant/Control)
+  Output: formatted csv for the pipeline: first column SampleId, second group (Pregnant/Control)
+  Note:  
+
+- `2_16S_set_cols_to_mipmlp.py`  
+  Input: from Yamas: otu.csv + taxonomy.csv 
+  Output: formatted csv for MIPMLP   
+  Note: 
 
 - `fig_1B_full_SG.py`  
   Input: formatted csv  
@@ -24,17 +29,16 @@
 
 # Projects Overview
 
-| Project Name | Group    | Type | Country | # Samples | 
-|--------------|----------|------|---------|--------|
-| PRJNA1247940 | Pregnant | WGS  | China   |  74    |
-| ERP020710    | Pregnant | WGS  | China   |  55    |
-| PRJNA1254708 | Pregnant | 16S  | China   |  63    |
-|--------------|----------|------|---------|---------|
-| PRJEB37731   | Control  | WGS  | Denmark |  160   |
-| PRJNA48479   | Control  | WGS  | USA     |  100   |    
+| Project Name | Group    | Type | Country | # Samples | V   |
+|--------------|----------|------|---------|--------|------|
+| PRJNA1247940 | Pregnant | WGS  | China   |  74    | V
+| ERP020710    | Pregnant | WGS  | China   |  55    | V
+| PRJNA1254708 | Pregnant | 16S  | China   |  63    | V
+|--------------|----------|------|---------|--------| --
+| PRJEB37731   | Control  | WGS  | Denmark |  160   | V
+| PRJNA48479   | Control  | WGS  | USA     |  100   | V  
 | PRJNA1067170 | Control  | WGS  | USA     |  124   |    
-| PRJNA669650  | Control  | 16S  | Finland |  208   |    
-| PRJNA547806  | Control  | 16S  | USA     |  90    |    
+| PRJNA669650  | Control  | 16S  | Finland |  208   | V  
 | PRJNA388263  | Control  | 16S  | USA     |  400   |    
 
 

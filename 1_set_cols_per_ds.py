@@ -13,7 +13,7 @@ import pandas as pd
 import os
 
 # ===== SETTINGS =====
-file_path = r"Yoram_Omri_Preg/datasets_after_yamas/PRJEB37731_Control_SG.csv"
+file_path = r"Yoram_Omri_Preg/datasets_after_yamas/SG/PRJNA48479_Control_SG.csv"
 group_value = "Control"   # or "Control"
 
 # ===== LOAD =====

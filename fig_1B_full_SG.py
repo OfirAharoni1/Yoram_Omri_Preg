@@ -7,7 +7,7 @@ import numpy as np
 
 # ===== SETTINGS =====
 input_folder = "/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/SG"
-output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots"
+output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots/SG"
 os.makedirs(output_folder, exist_ok=True)
 
 sample_id_col = "SampleID"
