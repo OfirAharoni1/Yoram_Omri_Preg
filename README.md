@@ -39,7 +39,7 @@
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V  
 | PRJNA1067170 | Control  | WGS  | USA     |  124   |    
 | PRJNA669650  | Control  | 16S  | Finland |  208   | V  
-| PRJNA388263  | Control  | 16S  | USA     |  400   |    
+| PRJNA388263  | Control  | 16S  | USA     |  400   | exporting   
 
 
 

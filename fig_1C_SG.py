@@ -10,8 +10,11 @@ import os
 def calculate_shannon(df):
     shannon_vals = []
 
-    for i in range(df.shape[0]):
-        counts = df.iloc[i].values.astype(float)
+    # נשאיר רק עמודות מספריות
+    df_numeric = df.select_dtypes(include=[np.number])
+
+    for i in range(df_numeric.shape[0]):
+        counts = df_numeric.iloc[i].values.astype(float)
         counts = counts[counts > 0]
 
         if len(counts) == 0:
@@ -29,10 +32,10 @@ def calculate_shannon(df):
 # insert datasets
 # ======================
 datasets = {
-    "Preg_1": ("preg1.csv", "Pregnant"),
-    "Preg_2": ("preg2.csv", "Pregnant"),
-    "Ctrl_1": ("control1.csv", "Control"),
-    "Ctrl_2": ("control2.csv", "Control"),
+    "Preg_1": ("Yoram_Omri_Preg/datasets_after_yamas/SG/ERP020710_Pregnant_SG_formatted.csv", "Pregnant"),
+    "Preg_2": ("Yoram_Omri_Preg/datasets_after_yamas/SG/PRJNA1247940_Pregnant_SG_formatted.csv", "Pregnant"),
+    "Ctrl_1": ("Yoram_Omri_Preg/datasets_after_yamas/SG/PRJEB37731_Control_SG_formatted.csv", "Control"),
+    "Ctrl_2": ("Yoram_Omri_Preg/datasets_after_yamas/SG/PRJNA48479_Control_SG_formatted.csv", "Control"),
 }
 
 
@@ -101,7 +104,7 @@ for i, name in enumerate(dataset_names):
         s=18
     )
 
-# עיצוב
+# design
 ax.set_xticks(positions)
 ax.set_xticklabels(dataset_names, rotation=45)
 ax.set_ylabel("Shannon Index", fontsize=13)
@@ -109,5 +112,8 @@ ax.set_ylabel("Shannon Index", fontsize=13)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("shannon_by_dataset.png", dpi=300)
+
+os.makedirs("Yoram_Omri_Preg/1C_plots", exist_ok=True)
+
+plt.savefig("Yoram_Omri_Preg/1C_plots/1C_SG.png", dpi=300)
 plt.show()
