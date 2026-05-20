@@ -6,7 +6,7 @@
   Note:  
 
 - `2_16S_set_cols_to_mipmlp.py`  
-  Input: from Yamas: otu.csv + taxonomy.csv 
+  Input: from Yamas- otu.csv + taxonomy.csv 
   Output: formatted csv for MIPMLP   
   Note: 
 
@@ -18,13 +18,18 @@
 - `fig_1B_MIPMLP.py`  
   Input: formatted csv after MIPMLP  
   Output: stackbar for each csv + violin plot for all  
-  Note: NOT TESTED YET 
+  Note: NOT USING MIPMLP
 
-- `fig_1C.py`  
+- `fig_1C_16S.py`  
   Input: formatted csv   
   Output: shannon plot   
-  Note: NOT TESTED YET  
+  Note: stil needs to change plot title 
 
+
+- `fig_1C_SG.py`  
+  Input: formatted csv   
+  Output: shannon plot   
+  Note: stil needs to change plot title 
 ---
 
 # Projects Overview

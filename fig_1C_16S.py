@@ -4,55 +4,64 @@ import matplotlib.pyplot as plt
 import os
 
 
+def load_clean_16s(path):
+    df = pd.read_csv(path, index_col=0, sep=None, engine="python")
+
+    # remove taxonomy row smartly
+    tax_mask = df.index.astype(str).str.lower().str.contains("tax")
+    if tax_mask.any():
+        df = df.loc[~tax_mask]
+    else:
+        df = df.iloc[:-1]
+
+    # paired-end: keep only _1, drop _2
+    idx = df.index.astype(str)
+    paired_mask = idx.str.endswith("_1") | idx.str.endswith("_2")
+
+    if paired_mask.any():
+        df = df.loc[~idx.str.endswith("_2")]
+        df.index = df.index.astype(str).str.replace(r"_1$", "", regex=True)
+
+    return df.apply(pd.to_numeric, errors="coerce").fillna(0)
+
+
 def calculate_shannon(df):
-    df = df.apply(pd.to_numeric, errors="coerce").fillna(0)
+    counts = df.to_numpy(dtype=float)
+    shannon = []
 
-    shannon_vals = []
-    for _, row in df.iterrows():
-        counts = row.values.astype(float)
-        counts = counts[counts > 0]
-
-        if len(counts) == 0:
-            shannon_vals.append(0)
+    for row in counts:
+        row = row[row > 0]
+        if len(row) == 0:
+            shannon.append(0)
         else:
-            p = counts / counts.sum()
-            shannon_vals.append(-np.sum(p * np.log(p)))
+            p = row / row.sum()
+            shannon.append(-np.sum(p * np.log(p)))
 
-    return np.array(shannon_vals)
+    return np.array(shannon)
 
 
 datasets = {
-    "Preg_1": ("Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA1254708_Pregnant_16S_for_MIPMLP.csv", "Pregnant"),
-    "Ctrl_1": ("Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA669650_Control_16S_for_MIPMLP.csv", "Control"),
+    "Preg_1": ("datasets_after_yamas/16S/PRJNA1254708_Pregnant_16S_for_MIPMLP.csv", "Pregnant"),
+    "Ctrl_1": ("datasets_after_yamas/16S/PRJNA669650_Control_16S_for_MIPMLP.csv", "Control"),
 }
 
 
 all_data = []
 
 for name, (path, group) in datasets.items():
+    df_numeric = load_clean_16s(path)
 
-    df = pd.read_csv(path, index_col=0, sep=None, engine="python")
-
-    # מורידים את שורת הטקסונומיה האחרונה
-    df = df.iloc[:-1, :]
-
-    # ממירים למספרים
-    df_numeric = df.apply(pd.to_numeric, errors="coerce").fillna(0)
-
-    # בדיקת עומק קריאה אמיתית
     print(f"\n{name}")
     print(df_numeric.sum(axis=1).describe())
 
-    shannon_vals = calculate_shannon(df_numeric)
-
     all_data.append(pd.DataFrame({
-        "Shannon": shannon_vals,
+        "Shannon": calculate_shannon(df_numeric),
         "Dataset": name,
         "Group": group
     }))
 
-all_data = pd.concat(all_data, ignore_index=True)
 
+all_data = pd.concat(all_data, ignore_index=True)
 
 fig, ax = plt.subplots(figsize=(8, 6))
 
