@@ -23,13 +23,19 @@
 - `fig_1C_16S.py`  
   Input: formatted csv   
   Output: shannon plot   
-  Note: stil needs to change plot title 
+  Note:  
 
 
 - `fig_1C_SG.py`  
   Input: formatted csv   
   Output: shannon plot   
-  Note: stil needs to change plot title 
+  Note: 
+
+
+- `fig_1D_SG.py`
+  Input: formatted csv  (going over SG folder)
+  Output: GIMIC plot   
+  Note: 
 ---
 
 # Projects Overview

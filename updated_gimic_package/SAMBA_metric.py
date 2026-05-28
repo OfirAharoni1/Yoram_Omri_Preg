@@ -535,8 +535,16 @@ def apply_meta_analysis(folder,list_datasets,CUTOFF,cohort):
 
         diff_c = apply_class_analysis(imgs1, imgs0, CUTOFF=CUTOFF, bact_names=bact_names)
         dict_class_diffs[name] = diff_c
-    dict_class_diffs_t1_vs_t2 = {key: dict_class_diffs[key] for key in dict_class_diffs if list_datasets[0] in key}
-    dict_class_diffs_t2_vs_t3 = {key: dict_class_diffs[key] for key in dict_class_diffs if list_datasets[1] in key}
+    
+    dict_class_diffs_one = {
+    key: dict_class_diffs[key]
+    for key in dict_class_diffs
+    if list_datasets[0] in key
+    }
 
-
-    plot_class_matrix(dict_class_diffs_t1_vs_t2,dict_class_diffs_t2_vs_t3,"T1 vs T2 GIMIC",cohort)
+    plot_circle_plot(
+        list(dict_class_diffs_one.values()),
+        [(df != 0.0).astype(float) for df in dict_class_diffs_one.values()],
+        "Control vs Pregnant GIMIC",
+        20
+    )
