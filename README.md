@@ -1,14 +1,25 @@
 # Files Overview
 
-- `1_set_cols_per_ds.py`  
-  Input: csv from Yamas  
-  Output: formatted csv for the pipeline: first column SampleId, second group (Pregnant/Control)
-  Note:  
+- `preprocess_16S.py`  
+  Input: from Yamas- otu.csv + taxonomy.csv  
+  Output: formatted csv for the pipeline: first column SampleId, rest taxa
+       
+  Note: *need to add group to output name*    
+  Note: suits to this structure:  
+  Yoram_Omri_Preg/datasets_after_yamas/16S/  
+│
+├── PRJNA669650/  
+│   ├── otu_PRJNA669650.csv  
+│   └── taxonomy_PRJNA669650.csv  
+│  
+├── PRJNA1254708/  
+│   ├── otu_PRJNA1254708.csv  
+│   └── taxonomy_PRJNA1254708.csv  
 
-- `2_16S_set_cols_to_mipmlp.py`  
-  Input: from Yamas- otu.csv + taxonomy.csv 
-  Output: formatted csv for MIPMLP   
-  Note: 
+- `1_set_cols_per_ds.py`  
+Input: csv from Yamas  (SG)
+Output: formatted csv for the pipeline: first column   SampleId, second group (Pregnant/Control)  
+Note:
 
 - `fig_1B_full_SG.py`  
   Input: formatted csv  
@@ -33,7 +44,7 @@
 
 
 - `fig_1D_SG.py`
-  Input: formatted csv  (going over SG folder)
+  Input: formatted csv (going over SG folder)  
   Output: GIMIC plot   
   Note: 
 ---
