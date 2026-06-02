@@ -61,6 +61,7 @@ Note:
 | PRJNA1247940 | Pregnant | WGS  | China   |  74    | V
 | ERP020710    | Pregnant | WGS  | China   |  55    | V
 | PRJNA1254708 | Pregnant | 16S  | China   |  63    | V
+| omri_stool   | Pregnant | 16S  | Israel? |  382   | V
 |--------------|----------|------|---------|--------| --
 | PRJEB37731   | Control  | WGS  | Denmark |  160   | V
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V  

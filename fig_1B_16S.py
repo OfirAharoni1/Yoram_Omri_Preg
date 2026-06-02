@@ -13,6 +13,22 @@ top_n = 12
 
 # ===== LOAD FILES =====
 csv_files = sorted(glob.glob(os.path.join(input_folder, "*.csv")))
+
+# Add Omri project manually because it is inside a subfolder.
+# For Fig 1B we use only the phylum-normalized table.
+extra_csv_files = [
+    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S_phylum_normalized.csv"
+]
+
+for f in extra_csv_files:
+    if os.path.exists(f):
+        csv_files.append(f)
+    else:
+        print(f"WARNING: file not found: {f}")
+
+csv_files = sorted(set(csv_files))
+
+
 print(f"Found {len(csv_files)} CSV files")
 
 data = {}

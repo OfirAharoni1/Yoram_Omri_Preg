@@ -2,18 +2,45 @@
 Figure 1D - 16S GIMIC analysis
 
 INPUT:
-    datasets_after_yamas/16S/
-    ├── PRJNA669650/
-    │   ├── otu_PRJNA669650.csv
-    │   └── taxonomy_PRJNA669650.csv
-    └── PRJNA1254708/
-        ├── otu_PRJNA1254708.csv
-        └── taxonomy_PRJNA1254708.csv
+    Original YAMAS 16S datasets:
+        datasets_after_yamas/16S/PRJNA669650/
+            otu_PRJNA669650.csv
+            taxonomy_PRJNA669650.csv
+
+        datasets_after_yamas/16S/PRJNA1254708/
+            otu_PRJNA1254708.csv
+            taxonomy_PRJNA1254708.csv
+
+    Extra preprocessed 16S tables:
+        datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S.csv
 
 OUTPUT:
     1D_16S/Control_VS_Pregnant/for_preprocess.csv
     1D_16S/Control_VS_Pregnant/tag.csv
     1D_16S/figure_plots/fig_1D_16S_Control_vs_Pregnant.png
+
+Notes:
+    - The analysis is always between two groups only:
+        Control vs Pregnant
+
+    - To add another original YAMAS dataset:
+        add its folder name to DATASETS["Control"] or DATASETS["Pregnant"]
+
+    - To add another ready preprocessed table:
+        add its full path to EXTRA_TABLES["Control"] or EXTRA_TABLES["Pregnant"]
+
+    - Omri is added to Pregnant as another table in the same group.
+
+    - Tables inside each group are combined using pd.concat(axis=0).
+      This means concat is done by samples, not by taxa:
+          rows = samples are added one under another
+          columns = taxa stay as features
+
+    - Before concat, the code keeps only taxa that are shared across all tables:
+          mutual_cols = mutual_cols.intersection(df.columns)
+
+      Therefore, if many projects are added, the number of shared taxa may decrease.
+      This is intentional, because GIMIC needs all samples to have the same columns.
 """
 
 import re
@@ -28,16 +55,28 @@ from updated_gimic_package.SAMBA_metric import *
 # =====================
 # Config
 # =====================
-DATA_DIR = Path("datasets_after_yamas/16S")
-OUT_ROOT = Path("1D_16S")
+BASE_DIR = Path("/home/aharonox/Yoram_Omri_Preg")
+
+DATA_DIR = BASE_DIR / "datasets_after_yamas/16S"
+OUT_ROOT = BASE_DIR / "1D_16S"
 COMPARISON = "Control_VS_Pregnant"
 
 CUTOFF = 0.8
 TOP_N = 25
 
+# Original YAMAS folders
 DATASETS = {
     "Control": ["PRJNA669650"],
     "Pregnant": ["PRJNA1254708"],
+}
+
+# Ready preprocessed tables
+# Important: for GIMIC we use the full non-normalized table, not phylum.
+EXTRA_TABLES = {
+    "Control": [],
+    "Pregnant": [
+        BASE_DIR / "datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S.csv"
+    ],
 }
 
 
@@ -101,9 +140,20 @@ def normalize_taxonomy_name(tax):
             if value == "":
                 value = "unclassified"
 
-            # clean weird brackets like [Lentisphaeria]
             value = value.strip("[]")
+            tax_dict[code] = value
 
+    # If taxonomy has no prefixes, e.g.
+    # Bacteria;Firmicutes;Bacilli;...
+    # assign levels by order.
+    if not tax_dict:
+        plain_parts = [
+            p.strip().strip("[]")
+            for p in parts
+            if p.strip() and p.strip().lower() not in ["nan", "none", "unassigned"]
+        ]
+
+        for code, value in zip(level_order, plain_parts):
             tax_dict[code] = value
 
     if not tax_dict:
@@ -127,7 +177,7 @@ def normalize_taxonomy_name(tax):
 
 
 # =====================
-# Load OTU + taxonomy directly
+# Load original YAMAS OTU + taxonomy
 # =====================
 def load_otu_tax_for_gimic(folder):
     otu_path = next(folder.glob("otu_*.csv"))
@@ -136,7 +186,8 @@ def load_otu_tax_for_gimic(folder):
     otu = pd.read_csv(otu_path, index_col=0)
     tax = pd.read_csv(tax_path, index_col=0)
 
-    tax = tax.loc[otu.index]
+    # safer than tax.loc[otu.index] in case some OTUs are missing
+    tax = tax.reindex(otu.index)
 
     new_cols = [normalize_taxonomy_name(x) for x in tax["Taxon"]]
     keep = [x is not None for x in new_cols]
@@ -144,6 +195,8 @@ def load_otu_tax_for_gimic(folder):
     otu = otu.loc[keep]
     new_cols = [x for x in new_cols if x is not None]
 
+    # OTU table: rows = OTUs, columns = samples
+    # GIMIC input: rows = samples, columns = taxonomy
     df = otu.T
     df.columns = new_cols
     df.index.name = "SampleID"
@@ -154,12 +207,53 @@ def load_otu_tax_for_gimic(folder):
 
     df = df.apply(pd.to_numeric, errors="coerce").fillna(0)
 
-    # Collapse only identical full taxonomy names
+    # Collapse identical full taxonomy names
     df = df.T.groupby(level=0).sum().T
 
     return df
 
 
+# =====================
+# Load ready preprocessed table
+# =====================
+def load_preprocessed_for_gimic(path):
+    """
+    Input format:
+        rows = samples
+        columns = taxonomy/taxa
+
+    Output:
+        rows = samples
+        columns = cleaned full taxonomy names
+    """
+    df = pd.read_csv(path, index_col=0)
+
+    df.columns = df.columns.astype(str).str.strip()
+    df.columns = df.columns.str.replace(r"\s*;\s*", ";", regex=True)
+
+    # remove non-informative columns if they exist
+    df = df.drop(columns=["Bacteria", "Unassigned"], errors="ignore")
+
+    # remove possible taxonomy row if it exists
+    df = df[~df.index.astype(str).str.lower().str.contains("tax")]
+
+    new_cols = [normalize_taxonomy_name(c) for c in df.columns]
+    keep = [c is not None for c in new_cols]
+
+    df = df.loc[:, keep]
+    df.columns = [c for c in new_cols if c is not None]
+
+    df = df.apply(pd.to_numeric, errors="coerce").fillna(0)
+
+    # Collapse identical full taxonomy names
+    df = df.T.groupby(level=0).sum().T
+
+    return df
+
+
+# =====================
+# Normalize for GIMIC
+# =====================
 def normalize_for_gimic(df):
     df = np.log10(df + 1)
 
@@ -172,8 +266,12 @@ def normalize_for_gimic(df):
 # =====================
 # Load datasets
 # =====================
-tables = {"Control": [], "Pregnant": []}
+tables = {
+    "Control": [],
+    "Pregnant": [],
+}
 
+# Load original YAMAS folders
 for group, folder_names in DATASETS.items():
     for folder_name in folder_names:
         folder = DATA_DIR / folder_name
@@ -186,6 +284,20 @@ for group, folder_names in DATASETS.items():
         tables[group].append(df)
 
         print(f"Loaded {folder_name}: {group}, shape={df.shape}")
+
+
+# Load extra preprocessed tables
+for group, paths in EXTRA_TABLES.items():
+    for path in paths:
+        if not path.exists():
+            print(f"Skipping missing file: {path}")
+            continue
+
+        df = load_preprocessed_for_gimic(path)
+        tables[group].append(df)
+
+        print(f"Loaded {path.name}: {group}, shape={df.shape}")
+
 
 if not tables["Control"] or not tables["Pregnant"]:
     raise ValueError("Need at least one Control and one Pregnant 16S dataset.")
@@ -200,13 +312,20 @@ mutual_cols = all_tables[0].columns
 for df in all_tables[1:]:
     mutual_cols = mutual_cols.intersection(df.columns)
 
+mutual_cols = sorted(mutual_cols)
+
 print("Shared taxa:", len(mutual_cols))
 
 if len(mutual_cols) == 0:
     raise ValueError("No shared taxa between Control and Pregnant.")
 
+
+# Combine all projects inside each group
 control = pd.concat([df[mutual_cols] for df in tables["Control"]], axis=0)
 preg = pd.concat([df[mutual_cols] for df in tables["Pregnant"]], axis=0)
+
+print("Combined Control shape:", control.shape)
+print("Combined Pregnant shape:", preg.shape)
 
 
 # =====================
@@ -268,7 +387,10 @@ diff_df = apply_class_analysis(
 diff_df = diff_df.replace([np.inf, -np.inf], np.nan).fillna(0)
 diff_df = diff_df.loc[diff_df.abs().sum(axis=1) > 0]
 
-# Remove non-informative labels from visualization
+
+# =====================
+# Filter + top taxa
+# =====================
 bad_patterns = r"unclassified|unknown|uncultured|metagenome|bacterium$"
 
 diff_df = diff_df[
@@ -345,12 +467,14 @@ plt.ylabel("Taxon")
 plot_dir = OUT_ROOT / "figure_plots"
 plot_dir.mkdir(parents=True, exist_ok=True)
 
+out_plot = plot_dir / "fig_1D_16S_Control_vs_Pregnant.png"
+
 plt.tight_layout()
-plt.savefig(plot_dir / "fig_1D_16S_Control_vs_Pregnant.png", dpi=300, bbox_inches="tight")
+plt.savefig(out_plot, dpi=300, bbox_inches="tight")
 plt.close()
 
 print("Done.")
 print("Shared taxa:", len(mutual_cols))
 print("Taxa shown:", len(taxa))
 print("Color limit:", color_lim)
-print("Plot saved in:", plot_dir / "fig_1D_16S_Control_vs_Pregnant.png")
+print("Plot saved in:", out_plot)
