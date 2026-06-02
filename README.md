@@ -17,7 +17,7 @@
 │   └── taxonomy_PRJNA1254708.csv  
 
 - `1_set_cols_per_ds.py`  
-Input: csv from Yamas  (SG)
+Input: csv from Yamas  (SG)  
 Output: formatted csv for the pipeline: first column   SampleId, second group (Pregnant/Control)  
 Note:
 
@@ -26,10 +26,10 @@ Note:
   Output: stackbar for each csv + violin plot for all  
   Note:  
 
-- `fig_1B_MIPMLP.py`  
+- `fig_1B_16S.py`  
   Input: formatted csv after MIPMLP  
   Output: stackbar for each csv + violin plot for all  
-  Note: NOT USING MIPMLP
+  Note: 
 
 - `fig_1C_16S.py`  
   Input: formatted csv   
@@ -45,6 +45,11 @@ Note:
 
 - `fig_1D_SG.py`
   Input: formatted csv (going over SG folder)  
+  Output: GIMIC plot   
+  Note: 
+
+- `fig_1D_16S.py`
+  Input: formatted csv (going over 16S folder)  
   Output: GIMIC plot   
   Note: 
 ---

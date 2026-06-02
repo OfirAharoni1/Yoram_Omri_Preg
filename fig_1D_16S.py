@@ -1,3 +1,21 @@
+"""
+Figure 1D - 16S GIMIC analysis
+
+INPUT:
+    datasets_after_yamas/16S/
+    ├── PRJNA669650/
+    │   ├── otu_PRJNA669650.csv
+    │   └── taxonomy_PRJNA669650.csv
+    └── PRJNA1254708/
+        ├── otu_PRJNA1254708.csv
+        └── taxonomy_PRJNA1254708.csv
+
+OUTPUT:
+    1D_16S/Control_VS_Pregnant/for_preprocess.csv
+    1D_16S/Control_VS_Pregnant/tag.csv
+    1D_16S/figure_plots/fig_1D_16S_Control_vs_Pregnant.png
+"""
+
 import re
 import numpy as np
 import pandas as pd
@@ -6,26 +24,26 @@ import matplotlib.pyplot as plt
 
 from updated_gimic_package.SAMBA_metric import *
 
+
 # =====================
 # Config
 # =====================
-CUTOFF = 0.8
-
 DATA_DIR = Path("datasets_after_yamas/16S")
 OUT_ROOT = Path("1D_16S")
 COMPARISON = "Control_VS_Pregnant"
+
+CUTOFF = 0.8
 TOP_N = 25
 
-
-def group_from_name(path):
-    name = path.name.lower()
-    if "pregnant" in name or "preg" in name:
-        return "Pregnant"
-    if "control" in name or "ctrl" in name:
-        return "Control"
-    return None
+DATASETS = {
+    "Control": ["PRJNA669650"],
+    "Pregnant": ["PRJNA1254708"],
+}
 
 
+# =====================
+# Taxonomy cleaning
+# =====================
 def normalize_taxonomy_name(tax):
     tax = str(tax).strip()
 
@@ -74,6 +92,7 @@ def normalize_taxonomy_name(tax):
         if p.startswith("d__"):
             p = "k__" + p.replace("d__", "", 1)
 
+        # format like k__Bacteria
         m = re.match(r"^([kpcofgs])__(.*)$", p)
         if m:
             code = m.group(1)
@@ -82,12 +101,15 @@ def normalize_taxonomy_name(tax):
             if value == "":
                 value = "unclassified"
 
+            # clean weird brackets like [Lentisphaeria]
+            value = value.strip("[]")
+
             tax_dict[code] = value
 
     if not tax_dict:
         return None
 
-    # fill missing levels so GIMIC always gets 7 levels
+    # Fill missing levels so GIMIC always gets 7 levels
     last_value = "unclassified"
     keep = []
 
@@ -104,43 +126,46 @@ def normalize_taxonomy_name(tax):
     return ";".join(keep)
 
 
-def load_clean_16s_for_gimic(path):
-    df = pd.read_csv(path, index_col=0, sep=None, engine="python")
+# =====================
+# Load OTU + taxonomy directly
+# =====================
+def load_otu_tax_for_gimic(folder):
+    otu_path = next(folder.glob("otu_*.csv"))
+    tax_path = next(folder.glob("taxonomy_*.csv"))
 
-    # find taxonomy row
-    tax_mask = df.index.astype(str).str.lower().str.contains("tax")
+    otu = pd.read_csv(otu_path, index_col=0)
+    tax = pd.read_csv(tax_path, index_col=0)
 
-    if tax_mask.any():
-        tax_row = df.loc[tax_mask].iloc[0]
-        df = df.loc[~tax_mask]
-    else:
-        tax_row = df.iloc[-1]
-        df = df.iloc[:-1]
+    tax = tax.loc[otu.index]
 
-    # paired-end: keep only _1, drop _2
-    idx = df.index.astype(str)
-    if (idx.str.endswith("_1") | idx.str.endswith("_2")).any():
-        df = df.loc[~idx.str.endswith("_2")]
-        df.index = df.index.astype(str).str.replace(r"_1$", "", regex=True)
+    new_cols = [normalize_taxonomy_name(x) for x in tax["Taxon"]]
+    keep = [x is not None for x in new_cols]
 
-    # use taxonomy row as column names
-    new_cols = [normalize_taxonomy_name(x) for x in tax_row.values]
-    keep_mask = [x is not None for x in new_cols]
+    otu = otu.loc[keep]
+    new_cols = [x for x in new_cols if x is not None]
 
-    df = df.loc[:, keep_mask]
-    df.columns = [x for x in new_cols if x is not None]
+    df = otu.T
+    df.columns = new_cols
+    df.index.name = "SampleID"
+
+    # paired-end: keep _1, drop _2
+    df = df[~df.index.astype(str).str.endswith("_2")]
+    df.index = df.index.astype(str).str.replace(r"_1$", "", regex=True)
 
     df = df.apply(pd.to_numeric, errors="coerce").fillna(0)
 
-    # collapse features with same taxonomy
-    df = df.groupby(df.columns, axis=1).sum()
+    # Collapse only identical full taxonomy names
+    df = df.T.groupby(level=0).sum().T
 
     return df
 
 
 def normalize_for_gimic(df):
     df = np.log10(df + 1)
-    df = (df - df.mean()) / df.std()
+
+    std = df.std().replace(0, np.nan)
+    df = (df - df.mean()) / std
+
     return df.replace([np.inf, -np.inf], 0).fillna(0)
 
 
@@ -149,30 +174,36 @@ def normalize_for_gimic(df):
 # =====================
 tables = {"Control": [], "Pregnant": []}
 
-for path in sorted(DATA_DIR.glob("*16S*.csv")):
-    group = group_from_name(path)
+for group, folder_names in DATASETS.items():
+    for folder_name in folder_names:
+        folder = DATA_DIR / folder_name
 
-    if group is None:
-        print(f"Skipping: {path.name}")
-        continue
+        if not folder.exists():
+            print(f"Skipping missing folder: {folder}")
+            continue
 
-    df = load_clean_16s_for_gimic(path)
-    tables[group].append(df)
+        df = load_otu_tax_for_gimic(folder)
+        tables[group].append(df)
 
-    print(f"Loaded {path.name}: {group}, shape={df.shape}")
+        print(f"Loaded {folder_name}: {group}, shape={df.shape}")
 
 if not tables["Control"] or not tables["Pregnant"]:
-    raise ValueError("Need at least one Control and one Pregnant 16S file.")
+    raise ValueError("Need at least one Control and one Pregnant 16S dataset.")
 
 
 # =====================
 # Shared taxa only
 # =====================
 all_tables = tables["Control"] + tables["Pregnant"]
-mutual_cols = all_tables[0].columns
 
+mutual_cols = all_tables[0].columns
 for df in all_tables[1:]:
     mutual_cols = mutual_cols.intersection(df.columns)
+
+print("Shared taxa:", len(mutual_cols))
+
+if len(mutual_cols) == 0:
+    raise ValueError("No shared taxa between Control and Pregnant.")
 
 control = pd.concat([df[mutual_cols] for df in tables["Control"]], axis=0)
 preg = pd.concat([df[mutual_cols] for df in tables["Pregnant"]], axis=0)
@@ -208,11 +239,11 @@ print(comparison_dir / "tag.csv")
 
 
 # =====================
-# Run GIMIC-like single comparison plot
+# Run GIMIC-like comparison
 # =====================
 array_of_imgs, bact_names, ordered_df = micro2matrix(
     processed,
-    str(OUT_ROOT / COMPARISON / "2D_images"),
+    str(comparison_dir / "2D_images"),
     save=False
 )
 
@@ -235,22 +266,29 @@ diff_df = apply_class_analysis(
 )
 
 diff_df = diff_df.replace([np.inf, -np.inf], np.nan).fillna(0)
-diff_df = diff_df.loc[(diff_df.abs().sum(axis=1) > 0)]
+diff_df = diff_df.loc[diff_df.abs().sum(axis=1) > 0]
 
-# Optional visualization filter
-# bad_patterns = r"unclassified|unknown|uncultured|metagenome|bacterium$"
-# diff_df = diff_df[
-#     ~diff_df.index.astype(str).str.contains(
-#         bad_patterns,
-#         case=False,
-#         regex=True,
-#         na=False
-#     )
-# ]
+# Remove non-informative labels from visualization
+bad_patterns = r"unclassified|unknown|uncultured|metagenome|bacterium$"
+
+diff_df = diff_df[
+    ~diff_df.index.astype(str).str.contains(
+        bad_patterns,
+        case=False,
+        regex=True,
+        na=False
+    )
+]
+
+if diff_df.empty:
+    raise ValueError("No taxa left after filtering unclassified/unknown labels.")
 
 diff_df["score"] = diff_df.abs().max(axis=1)
 diff_df = diff_df.sort_values("score", ascending=False).head(TOP_N)
 diff_df = diff_df.drop(columns="score")
+
+if diff_df.empty:
+    raise ValueError("No differential taxa found after GIMIC analysis.")
 
 
 # =====================
@@ -269,9 +307,15 @@ plot_long["x"] = plot_long["Level"].map({lvl: i for i, lvl in enumerate(levels)}
 plot_long["y"] = plot_long["Taxon"].map({tax: i for i, tax in enumerate(taxa)})
 
 max_abs = plot_long["Diff"].abs().max()
-plot_long["size"] = 40 + 1200 * (plot_long["Diff"].abs() / max_abs)
 
-plt.figure(figsize=(10, max(7, TOP_N * 0.35)))
+if max_abs == 0 or pd.isna(max_abs):
+    plot_long["size"] = 80
+    color_lim = 1
+else:
+    plot_long["size"] = 40 + 1200 * (plot_long["Diff"].abs() / max_abs)
+    color_lim = max_abs
+
+plt.figure(figsize=(10, max(7, len(taxa) * 0.35)))
 
 sc = plt.scatter(
     plot_long["x"],
@@ -279,8 +323,8 @@ sc = plt.scatter(
     s=plot_long["size"],
     c=plot_long["Diff"],
     cmap="bwr_r",
-    vmin=-0.2,
-    vmax=0.2,
+    vmin=-color_lim,
+    vmax=color_lim,
     edgecolors="black",
     linewidths=1.2,
     alpha=0.85
@@ -307,4 +351,6 @@ plt.close()
 
 print("Done.")
 print("Shared taxa:", len(mutual_cols))
+print("Taxa shown:", len(taxa))
+print("Color limit:", color_lim)
 print("Plot saved in:", plot_dir / "fig_1D_16S_Control_vs_Pregnant.png")
