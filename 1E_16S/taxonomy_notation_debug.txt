@@ -1,0 +1,417 @@
+Checking files:
+Control_PRJNA669650 folder exists: True /home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA669650
+  otu files: [PosixPath('/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA669650/otu_PRJNA669650.csv')]
+  taxonomy files: [PosixPath('/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA669650/taxonomy_PRJNA669650.csv')]
+Pregnant_PRJNA1254708 folder exists: True /home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA1254708
+  otu files: [PosixPath('/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA1254708/otu_PRJNA1254708.csv')]
+  taxonomy files: [PosixPath('/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/16S/PRJNA1254708/taxonomy_PRJNA1254708.csv')]
+Pregnant_Omri_stool file exists: True /home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S.csv
+
+====================================================================================================
+RAW TAXONOMY NOTATION SUMMARY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Control_PRJNA669650
+num raw taxa: 16084
+first 10 raw taxa:
+  'k__Bacteria; p__Bacteroidetes; c__Bacteroidia; o__Bacteroidales; f__Bacteroidaceae; g__Bacteroides; s__'
+  'k__Bacteria'
+  'k__Bacteria'
+  'k__Bacteria'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Ruminococcaceae; g__Faecalibacterium; s__prausnitzii'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Ruminococcaceae; g__Faecalibacterium; s__prausnitzii'
+  'k__Bacteria'
+  'k__Bacteria; p__Bacteroidetes; c__Bacteroidia; o__Bacteroidales; f__Rikenellaceae; g__Alistipes; s__putredinis'
+  'k__Bacteria; p__Bacteroidetes; c__Bacteroidia; o__Bacteroidales; f__Bacteroidaceae; g__Bacteroides; s__uniformis'
+  'Unassigned'
+
+notation counts:
+contains ';'      : 6395
+contains ','      : 0
+contains '|'      : 0
+contains '__'     : 15258
+contains 'k__'    : 15258
+contains 'd__'    : 0
+contains 'D_0__'  : 0
+contains 'p__'    : 6395
+
+semicolon level counts:
+1    9689
+2     299
+3     113
+4    1987
+5    1576
+6     373
+7    2047
+dtype: int64
+
+pipe level counts:
+1    16084
+dtype: int64
+
+----------------------------------------------------------------------------------------------------
+Pregnant_PRJNA1254708
+num raw taxa: 1778
+first 10 raw taxa:
+  'k:Bacteria,p:Bacteroidetes,c:Bacteroidia,o:Bacteroidales,f:Porphyromonadaceae,g:Porphyromonas'
+  'k:Bacteria,p:Firmicutes,c:Clostridia,o:Clostridiales,f:[Tissierellaceae],g:Peptoniphilus'
+  'k:Bacteria,p:Verrucomicrobia,c:Verrucomicrobiae,o:Verrucomicrobiales,f:Verrucomicrobiaceae,g:Akkermansia,s:Akkermansia_muciniphila'
+  'k:Bacteria,p:Actinobacteria,c:Actinobacteria,o:Actinomycetales,f:Actinomycetaceae,g:Actinomyces'
+  'k:Bacteria,p:Firmicutes,c:Clostridia,o:Clostridiales,f:Veillonellaceae,g:Dialister'
+  'k:Bacteria,p:Bacteroidetes,c:Bacteroidia,o:Bacteroidales,f:Prevotellaceae,g:Prevotella'
+  'k:Bacteria,p:Bacteroidetes,c:Bacteroidia,o:Bacteroidales,f:Porphyromonadaceae,g:Porphyromonas'
+  'k:Bacteria,p:Bacteroidetes,c:Bacteroidia,o:Bacteroidales,f:Prevotellaceae,g:Prevotella'
+  'k:Bacteria,p:Firmicutes,c:Clostridia,o:Clostridiales,f:[Tissierellaceae],g:1-68'
+  'k:Bacteria,p:Actinobacteria,c:Actinobacteria,o:Bifidobacteriales,f:Bifidobacteriaceae,g:Bifidobacterium'
+
+notation counts:
+contains ';'      : 0
+contains ','      : 1776
+contains '|'      : 0
+contains '__'     : 0
+contains 'k__'    : 0
+contains 'd__'    : 0
+contains 'D_0__'  : 0
+contains 'p__'    : 0
+
+semicolon level counts:
+1    1778
+dtype: int64
+
+pipe level counts:
+1    1778
+dtype: int64
+
+----------------------------------------------------------------------------------------------------
+Pregnant_Omri_stool
+num raw taxa: 12391
+first 10 raw taxa:
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Ruminococcaceae'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Lachnospiraceae; g__Coprococcus; s__catus'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Lachnospiraceae; g__Coprococcus; s__'
+  'k__Bacteria; p__Bacteroidetes; c__Bacteroidia; o__Bacteroidales; f__Porphyromonadaceae; g__Parabacteroides; s__distasonis'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Clostridiaceae; g__Clostridium'
+  'k__Bacteria; p__Bacteroidetes; c__Bacteroidia; o__Bacteroidales; f__S24-7; g__; s__'
+  'k__Bacteria; p__Proteobacteria; c__Betaproteobacteria; o__Neisseriales; f__Neisseriaceae'
+  'k__Bacteria; p__Spirochaetes; c__Spirochaetes; o__Spirochaetales; f__Spirochaetaceae; g__Treponema; s__'
+  'k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Lachnospiraceae'
+
+notation counts:
+contains ';'      : 11989
+contains ','      : 0
+contains '|'      : 0
+contains '__'     : 12391
+contains 'k__'    : 12391
+contains 'd__'    : 0
+contains 'D_0__'  : 0
+contains 'p__'    : 11989
+
+semicolon level counts:
+1     402
+2      57
+3      55
+4    1756
+5    1955
+6     624
+7    7542
+dtype: int64
+
+pipe level counts:
+1    12391
+dtype: int64
+
+====================================================================================================
+CURRENT SCRIPT NORMALIZER
+====================================================================================================
+
+loaded table shapes after normalization/collapse:
+Control_PRJNA669650: (208, 255)
+Pregnant_PRJNA1254708: (63, 397)
+Pregnant_Omri_stool: (382, 12391)
+
+----------------------------------------------------------------------------------------------------
+LEVEL 7 (species/full)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 48
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 242
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 83
+ALL 3 shared: 45
+first 10 shared:
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified;g__Actinomycetales_unclassified;s__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium;s__Corynebacterium_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Bifidobacterium;s__Bifidobacterium_unclassified
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Collinsella;s__Collinsella_unclassified
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Coriobacteriaceae_unclassified;s__Coriobacteriaceae_unclassified
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified;o__Bacteria_unclassified;f__Bacteria_unclassified;g__Bacteria_unclassified;s__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified;o__Bacteroidetes_unclassified;f__Bacteroidetes_unclassified;g__Bacteroidetes_unclassified;s__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroidaceae_unclassified;s__Bacteroidaceae_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__Bacteroides_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidales_unclassified;g__Bacteroidales_unclassified;s__Bacteroidales_unclassified
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172348, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=23636.1, median_row_sum=19486
+Pregnant_Omri_stool: zero_rows=317/382 (83.0%), mean_row_sum=8.84555, median_row_sum=0
+
+----------------------------------------------------------------------------------------------------
+LEVEL 6 (genus)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 112
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 169
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 176
+ALL 3 shared: 109
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobrevibacter
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae;g__Actinomyces
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae;g__Varibaculum
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified;g__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Micrococcaceae;g__Rothia
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Propionibacteriaceae;g__Propionibacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Bifidobacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Gardnerella
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Adlercreutzia
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=50519, median_row_sum=53080
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=21751.2, median_row_sum=17879.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 5 (family)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 66
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 83
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 97
+ALL 3 shared: 66
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2;f__Methanomassiliicoccaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Microbacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Micrococcaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Propionibacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=56976.6, median_row_sum=58735
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=25598.2, median_row_sum=22547.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 4 (order)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 36
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 43
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 54
+ALL 3 shared: 36
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified;o__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified;o__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales
+  k__Bacteria;p__Bacteroidetes;c__Flavobacteriia;o__Flavobacteriales
+  k__Bacteria;p__Bacteroidetes;c__Sphingobacteriia;o__Sphingobacteriales
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57213.1, median_row_sum=58848
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=26491, median_row_sum=23377
+
+----------------------------------------------------------------------------------------------------
+LEVEL 3 (class)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 26
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 29
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 33
+ALL 3 shared: 26
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia
+  k__Bacteria;p__Bacteroidetes;c__Flavobacteriia
+  k__Bacteria;p__Bacteroidetes;c__Sphingobacteriia
+  k__Bacteria;p__Cyanobacteria;c__4C0d-2
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57325.4, median_row_sum=59031
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=27020.6, median_row_sum=23857.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 2 (phylum)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 13
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 15
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 17
+ALL 3 shared: 13
+first 10 shared:
+  k__Archaea;p__Euryarchaeota
+  k__Bacteria;p__Actinobacteria
+  k__Bacteria;p__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes
+  k__Bacteria;p__Cyanobacteria
+  k__Bacteria;p__Firmicutes
+  k__Bacteria;p__Fusobacteria
+  k__Bacteria;p__Lentisphaerae
+  k__Bacteria;p__Proteobacteria
+  k__Bacteria;p__Synergistetes
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57334.9, median_row_sum=59037
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=27024.3, median_row_sum=23857.5
+
+====================================================================================================
+PIPE-AWARE NORMALIZER
+====================================================================================================
+
+loaded table shapes after normalization/collapse:
+Control_PRJNA669650: (208, 255)
+Pregnant_PRJNA1254708: (63, 397)
+Pregnant_Omri_stool: (382, 12391)
+
+----------------------------------------------------------------------------------------------------
+LEVEL 7 (species/full)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 48
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 242
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 83
+ALL 3 shared: 45
+first 10 shared:
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified;g__Actinomycetales_unclassified;s__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium;s__Corynebacterium_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Bifidobacterium;s__Bifidobacterium_unclassified
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Collinsella;s__Collinsella_unclassified
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Coriobacteriaceae_unclassified;s__Coriobacteriaceae_unclassified
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified;o__Bacteria_unclassified;f__Bacteria_unclassified;g__Bacteria_unclassified;s__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified;o__Bacteroidetes_unclassified;f__Bacteroidetes_unclassified;g__Bacteroidetes_unclassified;s__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroidaceae_unclassified;s__Bacteroidaceae_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__Bacteroides_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidales_unclassified;g__Bacteroidales_unclassified;s__Bacteroidales_unclassified
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172348, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=23636.1, median_row_sum=19486
+Pregnant_Omri_stool: zero_rows=317/382 (83.0%), mean_row_sum=8.84555, median_row_sum=0
+
+----------------------------------------------------------------------------------------------------
+LEVEL 6 (genus)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 112
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 169
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 176
+ALL 3 shared: 109
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobrevibacter
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae;g__Actinomyces
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae;g__Varibaculum
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified;g__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Micrococcaceae;g__Rothia
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Propionibacteriaceae;g__Propionibacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Bifidobacterium
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae;g__Gardnerella
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Adlercreutzia
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=50519, median_row_sum=53080
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=21751.2, median_row_sum=17879.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 5 (family)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 66
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 83
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 97
+ALL 3 shared: 66
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2;f__Methanomassiliicoccaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Actinomycetales_unclassified
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Microbacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Micrococcaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Propionibacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales;f__Bifidobacteriaceae
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=56976.6, median_row_sum=58735
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=25598.2, median_row_sum=22547.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 4 (order)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 36
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 43
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 54
+ALL 3 shared: 36
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria;o__Methanobacteriales
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Bifidobacteriales
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified;o__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified;o__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales
+  k__Bacteria;p__Bacteroidetes;c__Flavobacteriia;o__Flavobacteriales
+  k__Bacteria;p__Bacteroidetes;c__Sphingobacteriia;o__Sphingobacteriales
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57213.1, median_row_sum=58848
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=26491, median_row_sum=23377
+
+----------------------------------------------------------------------------------------------------
+LEVEL 3 (class)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 26
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 29
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 33
+ALL 3 shared: 26
+first 10 shared:
+  k__Archaea;p__Euryarchaeota;c__Methanobacteria
+  k__Archaea;p__Euryarchaeota;c__Thermoplasmata
+  k__Bacteria;p__Actinobacteria;c__Actinobacteria
+  k__Bacteria;p__Actinobacteria;c__Coriobacteriia
+  k__Bacteria;p__Bacteria_unclassified;c__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidetes_unclassified
+  k__Bacteria;p__Bacteroidetes;c__Bacteroidia
+  k__Bacteria;p__Bacteroidetes;c__Flavobacteriia
+  k__Bacteria;p__Bacteroidetes;c__Sphingobacteriia
+  k__Bacteria;p__Cyanobacteria;c__4C0d-2
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57325.4, median_row_sum=59031
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=27020.6, median_row_sum=23857.5
+
+----------------------------------------------------------------------------------------------------
+LEVEL 2 (phylum)
+Control_PRJNA669650 ∩ Pregnant_PRJNA1254708: 13
+Control_PRJNA669650 ∩ Pregnant_Omri_stool: 15
+Pregnant_PRJNA1254708 ∩ Pregnant_Omri_stool: 17
+ALL 3 shared: 13
+first 10 shared:
+  k__Archaea;p__Euryarchaeota
+  k__Bacteria;p__Actinobacteria
+  k__Bacteria;p__Bacteria_unclassified
+  k__Bacteria;p__Bacteroidetes
+  k__Bacteria;p__Cyanobacteria
+  k__Bacteria;p__Firmicutes
+  k__Bacteria;p__Fusobacteria
+  k__Bacteria;p__Lentisphaerae
+  k__Bacteria;p__Proteobacteria
+  k__Bacteria;p__Synergistetes
+
+zero rows after keeping ALL-3 shared taxa:
+Control_PRJNA669650: zero_rows=0/208 (0.0%), mean_row_sum=172350, median_row_sum=166548
+Pregnant_PRJNA1254708: zero_rows=0/63 (0.0%), mean_row_sum=57334.9, median_row_sum=59037
+Pregnant_Omri_stool: zero_rows=0/382 (0.0%), mean_row_sum=27024.3, median_row_sum=23857.5

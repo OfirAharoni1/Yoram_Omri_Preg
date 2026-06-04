@@ -31,24 +31,24 @@ Note:
   Output: stackbar for each csv + violin plot for all  
   Note: 
 
-- `fig_1C_16S.py`  
+- `fig_1C_16S.py`    
   Input: formatted csv   
   Output: shannon plot   
   Note:  
 
 
-- `fig_1C_SG.py`  
+- `fig_1C_SG.py`    
   Input: formatted csv   
   Output: shannon plot   
   Note: 
 
 
-- `fig_1D_SG.py`
+- `fig_1D_SG.py`  
   Input: formatted csv (going over SG folder)  
   Output: GIMIC plot   
   Note: 
 
-- `fig_1D_16S.py`
+- `fig_1D_16S.py`  
   Input: formatted csv (going over 16S folder)  
   Output: GIMIC plot   
   Note: 
