@@ -52,6 +52,35 @@ Note:
   Input: formatted csv (going over 16S folder)  
   Output: GIMIC plot   
   Note: 
+
+- `fig_1E_16S.py`  
+  Input: formatted csv (going over 16S folder)  
+  Output: miMic / SAMBA outputs and plots 
+  Note: taxonomy level 2
+
+- `fig_1E_16S_family.py`  
+  Input: formatted csv (going over 16S folder)  
+  Output: miMic / SAMBA outputs and plots 
+  Note: unite by family level
+
+- `fig_1E_16S_genus.py`  
+  Input: formatted csv (going over 16S folder)  
+  Output: miMic / SAMBA outputs and plots 
+  Note: unite by genus level
+
+- `fig_2A_16S.py`  
+  Input: 2 datasets- Preg + control + metadata file for each  
+  
+  Output:  
+  pregnancy_vs_control_significant_correlations/
+├── all_microbe_metadata_correlations_by_group.csv
+├── significant_correlation_counts_by_group.csv
+├── pregnancy_vs_control_number_of_significant_correlations.png
+└── pregnancy_vs_control_number_of_significant_correlations.pdf     
+  
+  Note: THIS IS AN INITIAL DRAFT - NEED TO MAKE CHANGES - JUST A BASE FOR NOW
+
+
 ---
 
 # Projects Overview
@@ -67,7 +96,7 @@ Note:
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V     |
 | PRJNA1067170 | Control  | WGS  | USA     |  124   |       |
 | PRJNA669650  | Control  | 16S  | Finland |  208   | V     |
-| PRJNA388263  | Control  | 16S  | USA     |  400   |export |  
+| PRJNA388263  | Control  | 16S  | USA     |  400   |problrm exporting |  
 
 
 
