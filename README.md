@@ -92,7 +92,7 @@ Note:
 | PRJNA1254708 | Pregnant | 16S  | China   |  63    | V     | none - need to contact authors |
 | omri_stool   | Pregnant | 16S  | Israel? |  382   | V     | BMI, Age, glucose, number of pregnancies, number of deliveries, way of conception, Antibiotics, Aspirin, Delivery_week, chronic medications, Smoking, Newborn_weight, stress test, education years, calories per day, carbs per day, food preferces |
 |--------------|----------|------|---------|--------| ----  | ------- |
-| PRJEB37731   | Control  | WGS  | Denmark |  160   | V     |
+| PRJEB37731   | Control  | WGS  | Denmark |  160   | V     | host_body_mass_index, travel_outside_the_country_in_last_six_months, host_disease_status, presence_of_pets_or_farm_animals, drug_usage, urine/urogenital_tract_disorder |
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V     |
 | PRJNA1067170 | Control  | WGS  | USA     |  124   |       |
 | PRJNA669650  | Control  | 16S  | Finland |  208   | V     |
