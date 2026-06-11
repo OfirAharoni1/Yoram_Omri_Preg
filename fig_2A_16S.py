@@ -15,11 +15,11 @@ from scipy.stats import spearmanr
 # INPUTS
 # ============================================================
 # Rows = samples, columns = taxa / bacteria
-PREG_MICROBIOME_FILE = "pregnancy_microbiome.csv"
+PREG_MICROBIOME_FILE = "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S.csv"
 CTRL_MICROBIOME_FILE = "control_microbiome.csv"
 
 # Rows = samples, columns = metadata variables
-PREG_METADATA_FILE = "pregnancy_metadata.csv"
+PREG_METADATA_FILE = "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/omri/omri_metadata_Pregnant.csv"
 CTRL_METADATA_FILE = "control_metadata.csv"
 
 OUTPUT_DIR = "pregnancy_vs_control_significant_correlations"

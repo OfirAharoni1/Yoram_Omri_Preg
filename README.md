@@ -71,12 +71,12 @@ Note:
 - `fig_2A_16S.py`  
   Input: 2 datasets- Preg + control + metadata file for each  
   
-  Output:  
-  pregnancy_vs_control_significant_correlations/
-├── all_microbe_metadata_correlations_by_group.csv
-├── significant_correlation_counts_by_group.csv
+  Output:    
+  pregnancy_vs_control_significant_correlations/   
+├── all_microbe_metadata_correlations_by_group.csv  
+├── significant_correlation_counts_by_group.csv  
 ├── pregnancy_vs_control_number_of_significant_correlations.png
-└── pregnancy_vs_control_number_of_significant_correlations.pdf     
+└── pregnancy_vs_control_number_of_significant_correlations.pdf       
   
   Note: THIS IS AN INITIAL DRAFT - NEED TO MAKE CHANGES - JUST A BASE FOR NOW
 
