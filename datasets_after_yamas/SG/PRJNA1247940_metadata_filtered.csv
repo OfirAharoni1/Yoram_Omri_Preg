@@ -1,0 +1,74 @@
+Run,batch,BMI,Collection_Date,Consent_Age,Delivery_EGA,Group,Preeclampsia_During_Labor,PreTerm_Labor_EGA,RACE,Stool_Count,tobacco_use,visit,ca_ld_birth_weight,ca_ld_delivery_type,ca_ld_sex_of_baby,CA_PretermLabor,GDM,hypertension,Preeclampsia_At_PP,StillBirth
+SRR33020076,1,27.18,2019-10-24,31,39.1429,Control,No,No,White,2,0,1,3620,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020086,1,35.37,2020-02-26,34,39,Case,No,No,White,2,0,2,3575,"Vaginal, spontaneous",Female,No,No,Yes,No,No
+SRR33020087,1,35.37,2019-12-20,34,39,Case,No,No,White,2,1,1,3575,"Vaginal, spontaneous",Female,No,No,Yes,No,No
+SRR33020088,1,28.12,2019-11-15,37,38.7143,Case,No,No,White,1,1,1,3481,Scheduled cesarean section,Female,No,Yes,No,No,No
+SRR33020089,1,21.58,2019-11-01,31,39.2857,Case,No,No,White,1,0,2,3061,"Vaginal, spontaneous",Male,No,No,Yes,No,No
+SRR33020090,2,20.85,2019-10-08,34,37.4286,Control,No,No,Other,1,1,1,3393,Unplanned cesarean section,Male,No,No,No,No,No
+SRR33020096,1,21.26,2021-05-28,25,41.1429,Control,No,No,White,2,0,P,3076,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020101,1,27.55,2019-05-24,31,39.1429,Control,No,No,Black,2,0,1,3760,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020112,1,52.4,2019-10-08,21,39.2857,Case,No,No,Other,2,0,1,3350,"Vaginal, spontaneous",Male,No,No,Yes,Yes,No
+SRR33020117,2,27.29,2019-07-03,37,37.2857,Control,No,No,White,3,1,1,2712,"Vaginal, spontaneous",Female,No,No,No,No,No
+SRR33020118,1,27.28,2019-11-22,29,41.1429,Case,No,No,White,3,0,P,4170,Unplanned cesarean section,Female,No,No,No,Yes,No
+SRR33020119,1,27.28,2019-06-25,29,41.1429,Case,No,No,White,3,0,2,4170,Unplanned cesarean section,Female,No,No,No,Yes,No
+SRR33020120,1,27.28,2019-04-30,29,41.1429,Case,No,No,White,3,1,1,4170,Unplanned cesarean section,Female,No,No,No,Yes,No
+SRR33020121,1,23.98,2019-05-08,31,40.5714,Case,Yes,No,White,1,0,2,4080,Unplanned cesarean section,Male,No,No,Yes,No,No
+SRR33020122,1,30.21,2019-04-24,36,39.2857,Case,No,No,Black,1,0,2,3060,"Vaginal, spontaneous",Female,No,No,Yes,No,No
+SRR33020126,2,45.35,2020-06-30,29,38.2857,Case,No,No,White,2,0,1,3385,"Vaginal, assisted (vacuum/forceps)",Female,No,Yes,Yes,No,No
+SRR33020132,2,21.42,2021-12-08,40,40,Case,No,No,White,3,0,1,3972,"Vaginal, spontaneous",Female,No,Yes,No,No,No
+SRR33020133,2,32.38,2021-10-28,36,33.5714,Case,No,Yes,Black,2,0,1,2084,Unplanned cesarean section,Male,No,Yes,Yes,No,No
+SRR33020137,2,30.88,2021-07-29,27,39.7143,Control,No,No,White,3,0,1,4288,Unplanned cesarean section,Female,No,No,Yes,No,No
+SRR33020138,2,19.71,2020-12-07,35,37.5714,Control,No,No,Other,2,0,1,3332,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020139,2,37.95,2019-05-23,31,37.2857,Case,Yes,No,Other,1,1,1,3160,"Vaginal, spontaneous",Male,Yes,Yes,Yes,No,No
+SRR33020140,2,24.64,2019-04-18,39,40,Control,No,No,White,2,0,2,3508,"Vaginal, spontaneous",Female,No,No,No,No,No
+SRR33020068,2,32.2,2019-04-05,26,39.5714,Control,No,No,Black,1,1,1,3490,Unplanned cesarean section,Male,No,No,No,No,No
+SRR33020069,2,37.35,2021-09-30,21,39.1429,Control,No,No,Black,1,0,2,2946,"Vaginal, spontaneous",Female,No,No,Yes,Yes,No
+SRR33020070,1,21.38,2019-08-06,37,37.7143,Control,No,No,White,2,0,2,3360,Scheduled cesarean section,Female,No,No,No,No,No
+SRR33020071,1,21.38,2019-05-17,37,37.7143,Control,No,No,White,2,0,1,3360,Scheduled cesarean section,Female,No,No,No,No,No
+SRR33020072,1,30.64,2019-08-01,33,40.1429,Control,No,No,White,1,0,2,3350,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020073,2,24.18,2019-03-12,27,39.4286,Control,No,No,White,1,0,1,2990,Unplanned cesarean section,Male,No,No,No,No,No
+SRR33020074,1,23.42,2019-05-06,32,39,Control,No,No,White,1,1,2,3800,Scheduled cesarean section,Female,No,No,No,No,No
+SRR33020075,1,27.18,2020-01-23,31,39.1429,Control,No,No,White,2,0,2,3620,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020077,1,52.4,2019-12-17,21,39.2857,Case,No,No,Other,2,0,2,3350,"Vaginal, spontaneous",Male,No,No,Yes,Yes,No
+SRR33020078,1,0,2019-08-12,0,39.1429,Case,No,No,Other,2,0,1,2890,"Vaginal, spontaneous",Male,No,No,Yes,No,No
+SRR33020079,2,25.45,2019-10-09,27,39.4286,Control,No,No,White,2,0,1,3081,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020080,1,43.06,2019-08-08,35,34.2857,Case,Yes,Yes,Black,1,1,2,2460,Unplanned cesarean section,Male,No,No,Yes,No,No
+SRR33020081,1,19.83,2021-10-18,33,34.4286,Case,Yes,Yes,White,3,0,P,1557,"Vaginal, spontaneous",Female,No,No,Yes,Yes,No
+SRR33020082,1,19.83,2021-05-20,33,34.4286,Case,Yes,Yes,White,3,0,2,1557,"Vaginal, spontaneous",Female,No,No,Yes,Yes,No
+SRR33020083,1,19.83,2021-03-18,33,34.4286,Case,Yes,Yes,White,3,0,1,1557,"Vaginal, spontaneous",Female,No,No,Yes,Yes,No
+SRR33020084,1,19.94,2021-01-29,32,39.1429,Case,No,No,White,1,0,2,2973,Scheduled cesarean section,Female,No,No,Yes,No,No
+SRR33020085,1,14.79,2020-02-21,18,37.5714,Case,No,No,White,1,1,1,2543,"Vaginal, spontaneous",Female,No,No,No,No,No
+SRR33020091,1,59.83,2019-12-03,31,38.8571,Case,No,No,Black,2,0,2,3339,Unplanned cesarean section,Female,No,Yes,Yes,No,No
+SRR33020092,1,59.83,2019-09-19,31,38.8571,Case,No,No,Black,2,1,1,3339,Unplanned cesarean section,Female,No,Yes,Yes,No,No
+SRR33020093,1,27.99,2021-05-08,29,39.2857,Control,No,No,White,2,0,P,3605,"Vaginal, spontaneous",Male,No,No,No,Yes,No
+SRR33020094,1,27.99,2021-01-13,29,39.2857,Control,No,No,White,2,0,2,3605,"Vaginal, spontaneous",Male,No,No,No,Yes,No
+SRR33020095,1,35.2,2019-05-15,28,39.5714,Control,No,No,White,1,1,2,3510,Scheduled cesarean section,Male,No,No,No,No,No
+SRR33020097,1,21.26,2021-01-14,25,41.1429,Control,No,No,White,2,0,2,3076,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020098,1,19.36,2019-09-19,19,39.1429,Control,No,No,White,1,1,1,3078,Scheduled cesarean section,Male,No,No,No,No,No
+SRR33020099,1,27.55,2019-08-16,31,39.1429,Control,No,No,Black,2,0,2,3760,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020100,2,22.55,2019-03-04,32,40.1429,Control,No,No,White,2,0,1,3540,"Vaginal, spontaneous",Female,No,No,No,No,No
+SRR33020102,1,52.1,2019-09-18,30,39.2857,Control,No,No,Black,1,1,1,3630,Scheduled cesarean section,Male,No,No,No,No,No
+SRR33020103,1,0,2020-03-02,0,38.8571,Control,No,No,Black,1,0,1,,,,,,,,
+SRR33020104,1,27.1,2020-02-13,27,38.8571,Control,No,No,Black,1,1,1,2670,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020105,1,0,2019-06-27,0,39,Control,No,No,Other,3,0,2,3280,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020106,1,0,2019-03-26,0,39,Control,No,No,Other,3,0,0,3280,"Vaginal, spontaneous",Male,No,No,No,No,No
+SRR33020107,1,54.02,2019-12-16,39,37.4286,Case,Yes,No,Black,1,0,2,2970,Unplanned cesarean section,Female,No,No,Yes,No,No
+SRR33020108,1,30.39,2019-11-07,27,32,Case,Yes,Yes,Black,1,0,2,1535,Unplanned cesarean section,Female,No,No,Yes,No,No
+SRR33020109,1,42.71,2019-09-03,25,38.2857,Case,No,No,White,2,1,2,2626,Unplanned cesarean section,Male,No,Yes,Yes,No,No
+SRR33020110,1,42.71,2019-07-08,25,38.2857,Case,No,No,White,2,1,1,2626,Unplanned cesarean section,Male,No,Yes,Yes,No,No
+SRR33020111,1,24.81,2019-08-02,28,40.7143,Case,No,No,White,1,0,2,3702,"Vaginal, spontaneous",Male,No,No,Yes,No,No
+SRR33020113,1,20.85,2019-07-29,21,39.2857,Case,No,No,White,3,1,2,2967,Unplanned cesarean section,Female,No,No,Yes,No,No
+SRR33020114,1,20.85,2019-05-06,21,39.2857,Case,No,No,White,3,1,1,2967,Unplanned cesarean section,Female,No,No,Yes,No,No
+SRR33020115,1,34.67,2019-07-26,27,40.5714,Case,Yes,No,Black,2,0,2,3010,Unplanned cesarean section,Female,No,Yes,Yes,No,No
+SRR33020116,1,34.67,2019-04-25,27,40.5714,Case,Yes,No,Black,2,1,1,3010,Unplanned cesarean section,Female,No,Yes,Yes,No,No
+SRR33020123,1,34.42,2019-03-11,33,37,Case,No,No,White,1,1,1,2920,Scheduled cesarean section,Female,No,No,Yes,Yes,No
+SRR33020124,1,23.21,2019-05-29,33,36.1429,Case,No,Yes,White,1,0,2,2880,Unplanned cesarean section,Female,Yes,No,Yes,No,No
+SRR33020125,2,35.11,2020-08-16,24,33.8571,Case,Yes,Yes,White,1,0,1,2792,Scheduled cesarean section,Female,No,Yes,Yes,No,No
+SRR33020127,2,23.28,2021-05-13,30,39.2857,Case,No,No,White,3,0,1,3680,"Vaginal, spontaneous",Male,No,Yes,No,No,No
+SRR33020128,2,18.63,2019-06-14,28,39.5714,Control,No,No,White,1,1,2,3340,"Vaginal, spontaneous",Female,No,No,No,No,No
+SRR33020129,2,45.05,2021-03-23,32,36,Case,No,Yes,White,3,0,1,3954,Scheduled cesarean section,Female,No,Yes,No,No,No
+SRR33020130,2,30.25,2022-01-12,28,39.7143,Case,No,No,White,3,1,1,3449,"Vaginal, spontaneous",Male,No,Yes,No,No,No
+SRR33020131,2,33.03,2021-11-18,30,37.4286,Case,No,No,White,1,0,1,3700,"Vaginal, spontaneous",Male,No,Yes,Yes,No,No
+SRR33020134,2,31.28,2021-08-20,39,37.1429,Case,No,No,White,2,0,2,2708,"Vaginal, spontaneous",Female,No,Yes,Yes,No,No
+SRR33020135,2,32.9,2021-09-01,33,39.1429,Case,No,No,White,3,0,1,2785,Scheduled cesarean section,Female,No,Yes,No,No,No
+SRR33020136,2,20.64,2021-08-14,34,39.2857,Control,No,No,White,1,1,2,3358,Unplanned cesarean section,Male,No,No,Yes,No,No

@@ -6,6 +6,7 @@ INPUT_ROOT = Path("datasets_after_yamas/16S")
 OUTPUT_FOLDER = Path("datasets_after_MIPMLP")
 OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
 
+
 for folder in INPUT_ROOT.iterdir():
     if not folder.is_dir():
         continue
@@ -40,11 +41,32 @@ for folder in INPUT_ROOT.iterdir():
 
     df = df.reset_index()
 
-    processed = MIPMLP.preprocess(
+    processed_norm = MIPMLP.preprocess(
         df,
         taxnomy_group="mean",
         normalization="none",
         taxonomy_level=2
+    )
+
+
+
+    processed_norm.index.name = "SampleID"
+
+    processed_norm = processed_norm.div(processed_norm.sum(axis=1), axis=0) * 100
+
+    mean_abundance = processed_norm.mean(axis=0)
+    high_abundance_taxa = mean_abundance[mean_abundance >= 0].index
+    processed_norm = processed_norm[high_abundance_taxa].copy()
+
+    processed_norm = processed_norm.div(processed_norm.sum(axis=1), axis=0) * 100
+
+    out_path = OUTPUT_FOLDER / f"{name}_GROUP_16S_formatted.csv"
+    processed_norm.to_csv(out_path)
+
+    # save one without normalization
+    processed = MIPMLP.preprocess(
+        df,
+        normalization="none",
     )
 
     processed.index.name = "SampleID"
@@ -53,12 +75,12 @@ for folder in INPUT_ROOT.iterdir():
 
     mean_abundance = processed.mean(axis=0)
     high_abundance_taxa = mean_abundance[mean_abundance >= 0].index
-    processed = processed[high_abundance_taxa].copy()
-
+    processed_ = processed[high_abundance_taxa].copy()
     processed = processed.div(processed.sum(axis=1), axis=0) * 100
 
-    out_path = OUTPUT_FOLDER / f"{name}_GROUP_16S_formatted.csv"
+    out_path = OUTPUT_FOLDER / f"{name}_GROUP_16S.csv"
     processed.to_csv(out_path)
+
 
     print(f"Saved: {out_path}")
 

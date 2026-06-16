@@ -13,8 +13,8 @@ import pandas as pd
 import os
 
 # ===== SETTINGS =====
-file_path = r"Yoram_Omri_Preg/datasets_after_yamas/SG/PRJNA48479_Control_SG.csv"
-group_value = "Control"   # or "Control"
+file_path = r"/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/SG/PRJNA1247940_Pregnant_SG.csv"
+group_value = "Pregnant"   # or "Control"
 
 # ===== LOAD =====
 df = pd.read_csv(file_path, skiprows=1, sep=",")
@@ -23,7 +23,7 @@ df = pd.read_csv(file_path, skiprows=1, sep=",")
 df.rename(columns={df.columns[0]: "SampleID"}, inplace=True)
 
 # ===== ADD Group COLUMN AS SECOND COLUMN =====
-df.insert(1, "Group", group_value)
+#df.insert(1, "Group", group_value)
 
 # ===== SAVE AS NEW FILE =====
 base, ext = os.path.splitext(file_path)
