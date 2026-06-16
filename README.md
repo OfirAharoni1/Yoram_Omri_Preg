@@ -101,6 +101,24 @@ Note:
 
 
 ---
+# fig 2A status  
+
+
+| Project Name | Group    | Type | Status |
+|--------------|----------|------|--------|
+| PRJNA1247940 | Pregnant | WGS  | 55 significant correlations (to batch) |
+| ERP020710    | Pregnant | WGS  | 0 significant correlations | 
+| PRJNA1254708 | Pregnant | 16S  | skip - no metadata | 
+| omri_stool   | Pregnant | 16S  | 165 significant correlations  |
+|--------------|----------|------|--------|
+| PRJEB37731   | Control  | WGS  | 20 significant correlations       | 
+| PRJNA48479   | Control  | WGS  | skip - no metadata | 
+| PRJNA669650  | Control  | 16S  | no usable metadata  | 
+
+
+
+
+---
 
 # Reminders
 
