@@ -68,17 +68,27 @@ Note:
   Output: miMic / SAMBA outputs and plots 
   Note: unite by genus level
 
-- `fig_2A_16S.py`  
-  Input: 2 datasets- Preg + control + metadata file for each  
+- `fig_2A.py`  
+  Input:
+  1. Microbiome table:
+    - rows = samples
+    - columns = microbial taxa / bacteria
+    - first column = sample IDs / index
+
+  2. Metadata table:
+    - rows = samples
+    - columns = metadata variables
+    - first column = sample IDs / index
+
+  Output:
+  For each project, the script saves:
+  - all_microbe_metadata_correlations.csv
+  - significant_correlation_counts.csv
+  - number_of_significant_correlations.png
+  - number_of_significant_correlations.pdf
+
+  It also saves one combined table across all projects.  
   
-  Output:    
-  pregnancy_vs_control_significant_correlations/   
-├── all_microbe_metadata_correlations_by_group.csv  
-├── significant_correlation_counts_by_group.csv  
-├── pregnancy_vs_control_number_of_significant_correlations.png
-└── pregnancy_vs_control_number_of_significant_correlations.pdf       
-  
-  Note: THIS IS AN INITIAL DRAFT - NEED TO MAKE CHANGES - JUST A BASE FOR NOW
 
 
 ---
