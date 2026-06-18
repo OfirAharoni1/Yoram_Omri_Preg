@@ -1,4 +1,58 @@
-# Files Overview
+# Projects Overview
+
+| Project Name | Group    | Type | Country | # Samples | V   | metadata |
+|--------------|----------|------|---------|--------|------| -------- | 
+| PRJNA1247940 | Pregnant | WGS  | USA   |  74    | V     | BMI, batch, Consent_Age, Delivery_EGA, country, Preeclampsia_During_Labor, PreTerm_Labor_EGA, tobacco_use, Birth Weight, delivery_type, sex_of_baby, PretermLabor, GDM, hypertension, Preeclampsia_At_PP, StillBirth |  
+| ERP020710    | Pregnant | WGS  | China   |  55    | V     | Age, Body-mass index, Blood _glucose_t=0min, Blood_glucose_t=120mins, Blood_glucose_t=60mins, Disease status, Gestational weeks (fecal sample collection), Gestational weeks (OGTT testing) , Height, Total mass, (manually - https://gigadb.org/dataset/100326 )  | 
+| PRJNA1254708 | Pregnant | 16S  | China   |  63    | V     | none - need to contact authors |
+| omri_stool   | Pregnant | 16S  | Israel? |  382   | V     | BMI, Age, glucose, number of pregnancies, number of deliveries, way of conception, Antibiotics, Aspirin, Delivery_week, chronic medications, Smoking, Newborn_weight, stress test, education years, calories per day, carbs per day, food preferces |
+|--------------|----------|------|---------|--------| ----  | ------- |
+| PRJEB37731   | Control  | WGS  | Denmark |  160   | V     | host_body_mass_index, travel_outside_the_country_in_last_six_months, host_disease_status, presence_of_pets_or_farm_animals, drug_usage, urine/urogenital_tract_disorder |
+| PRJNA48479   | Control  | WGS  | USA     |  100   | V     | nothing relevant
+| PRJNA1067170 | Control  | WGS  | USA     |  124   | need permision to download  | 
+| PRJNA669650  | Control  | 16S  | Finland |  208   | V     | Host_age, Host_disease (null/control)  |
+| PRJNA388263  | Control  | 16S  | USA     |  400   |problem exporting |  
+ 
+
+
+---
+# fig 2A 
+
+This figure shows the number of significant correlations  
+(adjusted p-value < 0.05) between metadata features and microbial taxa,  
+for each dataset separately.
+
+
+## Status    
+| Project Name | Group    | Type | Status |
+|--------------|----------|------|--------|
+| PRJNA1247940 | Pregnant | WGS  | 55 significant correlations (to batch) |
+| ERP020710    | Pregnant | WGS  | 0 significant correlations | 
+| PRJNA1254708 | Pregnant | 16S  | skip - no metadata | 
+| omri_stool   | Pregnant | 16S  | 165 significant correlations  |
+|--------------|----------|------|--------|
+| PRJEB37731   | Control  | WGS  | 20 significant correlations       | 
+| PRJNA48479   | Control  | WGS  | skip - no metadata | 
+| PRJNA669650  | Control  | 16S  | no usable metadata  | 
+
+
+## Figures  
+
+| Project Name | Group    | Type | Figure |  
+|--------------|----------|------|--------|
+| PRJNA1247940 | Pregnant | WGS  | <img src="fig_2A/PRJNA1247940_Pregnant_SG/number_of_significant_correlations.png" width="500"> |
+| ERP020710    | Pregnant | WGS  | <img src="fig_2A/ERP020710_Pregnant_SG/number_of_significant_correlations.png" width="500"> | 
+| PRJNA1254708 | Pregnant | 16S  | skip - no metadata | 
+| omri_stool   | Pregnant | 16S  | <img src="fig_2A/omri_stool_Pregnant_16S/number_of_significant_correlations.png" width="500">  |
+|--------------|----------|------|--------|
+| PRJEB37731   | Control  | WGS  | <img src="fig_2A/PRJEB37731_Control_SG/number_of_significant_correlations.png" width="500">       | 
+| PRJNA48479   | Control  | WGS  | skip - no metadata | 
+| PRJNA669650  | Control  | 16S  | no usable metadata  | 
+
+
+---
+
+# Python Files Overview
 
 - `preprocess_16S.py`  
   Input: from Yamas- otu.csv + taxonomy.csv  
@@ -89,45 +143,6 @@ Note:
 
   It also saves one combined table across all projects.  
   
-
-
----
-
-# Projects Overview
-
-| Project Name | Group    | Type | Country | # Samples | V   | metadata |
-|--------------|----------|------|---------|--------|------| -------- | 
-| PRJNA1247940 | Pregnant | WGS  | USA   |  74    | V     | BMI, Consent_Age, Delivery_EGA, country, Preeclampsia_During_Labor, PreTerm_Labor_EGA, tobacco_use, Birth Weight, delivery_type, sex_of_baby, PretermLabor, GDM, hypertension, Preeclampsia_At_PP, StillBirth |  
-| ERP020710    | Pregnant | WGS  | China   |  55    | V     | Age, Body-mass index, Disease status, Gestational weeks (fecal sample collection), Gestational weeks (OGTT testing) , Height, Total mass, (manually - https://gigadb.org/dataset/100326 )  | 
-| PRJNA1254708 | Pregnant | 16S  | China   |  63    | V     | none - need to contact authors |
-| omri_stool   | Pregnant | 16S  | Israel? |  382   | V     | BMI, Age, glucose, number of pregnancies, number of deliveries, way of conception, Antibiotics, Aspirin, Delivery_week, chronic medications, Smoking, Newborn_weight, stress test, education years, calories per day, carbs per day, food preferces |
-|--------------|----------|------|---------|--------| ----  | ------- |
-| PRJEB37731   | Control  | WGS  | Denmark |  160   | V     | host_body_mass_index, travel_outside_the_country_in_last_six_months, host_disease_status, presence_of_pets_or_farm_animals, drug_usage, urine/urogenital_tract_disorder |
-| PRJNA48479   | Control  | WGS  | USA     |  100   | V     | nothing relevant
-| PRJNA1067170 | Control  | WGS  | USA     |  124   | need permision to download  | 
-| PRJNA669650  | Control  | 16S  | Finland |  208   | V     | Host_age, Host_disease (null/control)  |
-| PRJNA388263  | Control  | 16S  | USA     |  400   |problem exporting |  
- 
-
-
----
-# fig 2A status  
-
-
-| Project Name | Group    | Type | Status |
-|--------------|----------|------|--------|
-| PRJNA1247940 | Pregnant | WGS  | 55 significant correlations (to batch) |
-| ERP020710    | Pregnant | WGS  | 0 significant correlations | 
-| PRJNA1254708 | Pregnant | 16S  | skip - no metadata | 
-| omri_stool   | Pregnant | 16S  | 165 significant correlations  |
-|--------------|----------|------|--------|
-| PRJEB37731   | Control  | WGS  | 20 significant correlations       | 
-| PRJNA48479   | Control  | WGS  | skip - no metadata | 
-| PRJNA669650  | Control  | 16S  | no usable metadata  | 
-
-
-
-
 ---
 
 # Reminders
