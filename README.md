@@ -80,7 +80,7 @@ Note:
     - columns = metadata variables
     - first column = sample IDs / index
 
-  Output:
+  Output:  
   For each project, the script saves:
   - all_microbe_metadata_correlations.csv
   - significant_correlation_counts.csv
