@@ -16,6 +16,53 @@
 
 
 ---
+# Taxa Changes
+
+### Shotgun 
+
+Tested taxa after cleaning(genus + remove undefined): **688**
+
+| Category | Number of taxa |
+|---|---:|
+| Higher in pregnancy | 33 |
+| Lower in pregnancy | 6 |
+| Appears in pregnancy | 7 |
+| Disappears in pregnancy | 0 |
+| Not candidate | 642 |
+
+
+### 16S
+
+Tested taxa after cleaning(genus + remove undefined): **154**
+
+| Category | Number of taxa |
+|---|---:|
+| Higher in pregnancy | 15 |
+| Lower in pregnancy | 33 |
+| Appears in pregnancy | 14 |
+| Disappears in pregnancy | 3 |
+| Not candidate | 89 |
+
+Total candidate taxa: **65**
+
+
+### Main taxa
+
+**Shotgun — higher in pregnancy:**  
+Romboutsia, Flavonifractor, Enterocloster, Intestinibacter, Streptococcus, Lachnoclostridium, Holdemania, Eggerthella, Anaerobutyricum, Anaerostipes, Blautia, Roseburia
+
+**Shotgun — lower in pregnancy:**  
+Odoribacter, Oscillibacter, Bacteroides, Akkermansia, Alistipes, Parabacteroides
+
+**16S — higher in pregnancy:**  
+Haemophilus, Leptotrichia, Prevotella, Megasphaera, Corynebacterium, Fusobacterium, Porphyromonas, Rothia, Campylobacter, Neisseria, Actinomyces, Streptococcus
+
+**16S — lower in pregnancy:**  
+Alistipes, Lachnospira, Sutterella, Roseburia, Anaerotruncus, Ruminococcus, Parabacteroides, Dorea, Bifidobacterium, Oscillospira
+
+
+
+---
 # fig 2A 
 
 This figure shows the number of significant correlations  
