@@ -12,6 +12,8 @@
 | PRJNA1067170 | Control  | WGS  | USA     |  124   | need permision to download  | 
 | PRJNA669650  | Control  | 16S  | Finland |  208   | V     | Host_age, Host_disease (null/control)  |
 | PRJNA388263  | Control  | 16S  | USA     |  400   |problem exporting |  
+| PRJNA545251  | Control  | 16S  | Barbados, Chile, South Africa, Thailand | 305 | downloading | https://www.nature.com/articles/s41598-022-21779-z |
+
  
 
 
