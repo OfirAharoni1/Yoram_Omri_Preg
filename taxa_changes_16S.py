@@ -15,7 +15,9 @@ PREGNANT_FILES = [
 ]
 
 CONTROL_FILES = [
-    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/PRJNA669650_Control_16S_genus.csv",
+    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/PRJNA669650_Control_16S.csv",
+    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/PRJNA388263_Control_16S.csv",
+    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/PRJNA545251_Control_16S.csv",
 ]
 
 OUTDIR = Path("/home/aharonox/Yoram_Omri_Preg/consistent_pregnancy_taxa_16S")

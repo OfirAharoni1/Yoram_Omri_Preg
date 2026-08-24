@@ -11,14 +11,20 @@
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V     | nothing relevant
 | PRJNA1067170 | Control  | WGS  | USA     |  124   | need permision to download  | 
 | PRJNA669650  | Control  | 16S  | Finland |  208   | V     | Host_age, Host_disease (null/control)  |
-| PRJNA388263  | Control  | 16S  | USA     |  400   |problem exporting |  
-| PRJNA545251  | Control  | 16S  | Barbados, Chile, South Africa, Thailand | 305 | downloading | https://www.nature.com/articles/s41598-022-21779-z |
+| PRJNA388263  | Control  | 16S  | USA     |  400   | V need to insert to pipeline (preprocess) |  
+| PRJNA545251  | Control  | 16S  | Barbados, Chile, South Africa, Thailand | 305 | V need to insert to pipeline (preprocess) | https://www.nature.com/articles/s41598-022-21779-z |
 
  
 
 
 ---
 # Taxa Changes
+
+**Higher in pregnancy:** Mann–Whitney q < 0.05, log2FC (pregnancy vs. control) ≥ 0.5, and the median abundance is higher in pregnancy in at least 80% of all pregnancy–control project comparisons.  
+**Lower in pregnancy:** Mann–Whitney q < 0.05, log2FC (pregnancy vs. control) ≤ −0.5, and the median abundance is lower in pregnancy in at least 80% of all pregnancy–control project comparisons.  
+**Appears in pregnancy:** Fisher q < 0.05, prevalence ≥ 20% in pregnancy, and prevalence ≤ 2% in controls.  
+**Disappears in pregnancy:** Fisher q < 0.05, prevalence ≥ 20% in controls, and prevalence ≤ 2% in pregnancy.  
+**Not candidate:** A tested taxon that does not meet any of the criteria above.  
 
 ### Shotgun 
 
@@ -35,17 +41,17 @@ Tested taxa after cleaning(genus + remove undefined): **688**
 
 ### 16S
 
-Tested taxa after cleaning(genus + remove undefined): **154**
+Tested taxa after cleaning(genus + remove undefined): **123**
 
 | Category | Number of taxa |
 |---|---:|
-| Higher in pregnancy | 15 |
-| Lower in pregnancy | 33 |
-| Appears in pregnancy | 14 |
-| Disappears in pregnancy | 3 |
-| Not candidate | 89 |
+| Higher in pregnancy | 20 |
+| Lower in pregnancy | 0 |
+| Appears in pregnancy | 0 |
+| Disappears in pregnancy | 0 |
+| Not candidate | 103 |
 
-Total candidate taxa: **65**
+Total candidate taxa: **20**
 
 
 ### Main taxa
@@ -57,10 +63,16 @@ Romboutsia, Flavonifractor, Enterocloster, Intestinibacter, Streptococcus, Lachn
 Odoribacter, Oscillibacter, Bacteroides, Akkermansia, Alistipes, Parabacteroides
 
 **16S — higher in pregnancy:**  
-Haemophilus, Leptotrichia, Prevotella, Megasphaera, Corynebacterium, Fusobacterium, Porphyromonas, Rothia, Campylobacter, Neisseria, Actinomyces, Streptococcus
+Atopobium, Megasphaera, Selenomonas, Campylobacter, Leptotrichia, [Prevotella], Corynebacterium, Actinomyces, Fusobacterium, Peptostreptococcus, Porphyromonas, Haemophilus, Rothia, Aggregatibacter, Veillonella, Dialister, Akkermansia, Streptococcus, Prevotella, Neisseria
 
 **16S — lower in pregnancy:**  
-Alistipes, Lachnospira, Sutterella, Roseburia, Anaerotruncus, Ruminococcus, Parabacteroides, Dorea, Bifidobacterium, Oscillospira
+None
+
+**16S — appears in pregnancy:**  
+None
+
+**16S — disappears in pregnancy:**  
+None
 
 
 
@@ -199,4 +211,3 @@ Note:
 -  fig 1B - first building stackbar for each DS and then create the violin plot - the code for only stackbars is at archive folder.
 -  
 -  
-

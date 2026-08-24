@@ -1,6 +1,6 @@
 """
 RUN ME FIRST
-on the datasets from yamas
+on the datasets from yamas (SG)
 
 we get formatted csv where:
 1) first column named: SampleID
