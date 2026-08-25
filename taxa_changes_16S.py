@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import re
 from scipy.stats import fisher_exact, mannwhitneyu
 from statsmodels.stats.multitest import multipletests
 from pathlib import Path
@@ -57,6 +58,14 @@ def clean_taxon_name(taxon):
         for prefix in prefixes:
             if part.startswith(prefix):
                 part = part.replace(prefix, "", 1)
+
+        # Defensive cleanup for outputs created before preprocess_16S.py
+        # standardized per-rank confidence annotations.
+        part = re.sub(
+            r"\s*\((?:0(?:\.\d+)?|1(?:\.0+)?)\)\s*$",
+            "",
+            part,
+        ).strip()
 
         if part and part.lower() not in {"nan", "none"}:
             parts.append(part)
