@@ -59,6 +59,9 @@ def normalize_taxonomy_name(taxon):
             name,
         ).strip()
 
+        if rank == "d":
+            rank = "k"
+
         if rank:
             ranked[rank] = name
         elif name:

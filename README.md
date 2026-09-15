@@ -4,15 +4,15 @@
 |--------------|----------|------|---------|--------|------| -------- | 
 | PRJNA1247940 | Pregnant | WGS  | USA   |  74    | V     | BMI, batch, Consent_Age, Delivery_EGA, country, Preeclampsia_During_Labor, PreTerm_Labor_EGA, tobacco_use, Birth Weight, delivery_type, sex_of_baby, PretermLabor, GDM, hypertension, Preeclampsia_At_PP, StillBirth |  
 | ERP020710    | Pregnant | WGS  | China   |  55    | V     | Age, Body-mass index, Blood _glucose_t=0min, Blood_glucose_t=120mins, Blood_glucose_t=60mins, Disease status, Gestational weeks (fecal sample collection), Gestational weeks (OGTT testing) , Height, Total mass, (manually - https://gigadb.org/dataset/100326 )  | 
-| PRJNA1254708 | Pregnant | 16S  | China   |  63    | V     | none - need to contact authors |
+| PRJNA1254708 | Pregnant | 16S  | China   |  63    | V need to preprocess     | none - need to contact authors |
 | omri_stool   | Pregnant | 16S  | Israel? |  382   | V     | BMI, Age, glucose, number of pregnancies, number of deliveries, way of conception, Antibiotics, Aspirin, Delivery_week, chronic medications, Smoking, Newborn_weight, stress test, education years, calories per day, carbs per day, food preferces |
 |--------------|----------|------|---------|--------| ----  | ------- |
 | PRJEB37731   | Control  | WGS  | Denmark |  160   | V     | host_body_mass_index, travel_outside_the_country_in_last_six_months, host_disease_status, presence_of_pets_or_farm_animals, drug_usage, urine/urogenital_tract_disorder |
 | PRJNA48479   | Control  | WGS  | USA     |  100   | V     | nothing relevant
 | PRJNA1067170 | Control  | WGS  | USA     |  124   | need permision to download  | 
-| PRJNA669650  | Control  | 16S  | Finland |  208   | V     | Host_age, Host_disease (null/control)  |
-| PRJNA388263  | Control  | 16S  | USA     |  400   | V need to insert to pipeline (preprocess) |  
-| PRJNA545251  | Control  | 16S  | Barbados, Chile, South Africa, Thailand | 305 | V need to insert to pipeline (preprocess) | https://www.nature.com/articles/s41598-022-21779-z |
+| PRJNA669650  | Control  | 16S  | Finland |  208   | V need to preprocess     | Host_age, Host_disease (null/control)  |
+| PRJNA388263  | Control  | 16S  | USA     |  400   | V need to preprocess |  
+| PRJNA545251  | Control  | 16S  | Barbados, Chile, South Africa, Thailand | 305 | need to preprocess | https://www.nature.com/articles/s41598-022-21779-z |
 
  
 
@@ -43,17 +43,21 @@ Tested taxa after cleaning(genus + remove undefined): **688**
 
 ### 16S
 
-Tested taxa after cleaning(genus + remove undefined): **123**
+Pregnancy projects: **PRJEB58050** and **PRJNA1254708**.  
+Control projects: **PRJNA669650**, **PRJNA388263**, and **PRJNA545251**.
+
+Tested genera shared and observed in all five projects: **65**. Missing intermediate taxonomy ranks are allowed; genus names must be informative and match exactly, including suffixes.
+
+Source: [candidate_taxa.csv](consistent_pregnancy_taxa_16S/candidate_taxa.csv).
 
 | Category | Number of taxa |
 |---|---:|
-| Higher in pregnancy | 20 |
-| Lower in pregnancy | 0 |
+| Higher in pregnancy | 7 |
+| Lower in pregnancy | 6 |
 | Appears in pregnancy | 0 |
 | Disappears in pregnancy | 0 |
-| Not candidate | 103 |
 
-Total candidate taxa: **20**
+Total candidate taxa: **13**
 
 
 ### Main taxa
@@ -65,10 +69,23 @@ Romboutsia, Flavonifractor, Enterocloster, Intestinibacter, Streptococcus, Lachn
 Odoribacter, Oscillibacter, Bacteroides, Akkermansia, Alistipes, Parabacteroides
 
 **16S — higher in pregnancy:**  
-Atopobium, Megasphaera, Selenomonas, Campylobacter, Leptotrichia, [Prevotella], Corynebacterium, Actinomyces, Fusobacterium, Peptostreptococcus, Porphyromonas, Haemophilus, Rothia, Aggregatibacter, Veillonella, Dialister, Akkermansia, Streptococcus, Prevotella, Neisseria
+
+- Akkermansia
+- Bifidobacterium_388775
+- Collinsella
+- Dialister_37762
+- Escherichia
+- Faecalibacterium
+- Gemmiger_A_73129
 
 **16S — lower in pregnancy:**  
-None
+
+- Alistipes_A_871400
+- Anaerotignum_189125
+- Bacteroides_H_857956
+- Hominimerdicola
+- Parabacteroides_B_862066
+- Streptococcus
 
 **16S — appears in pregnancy:**  
 None
