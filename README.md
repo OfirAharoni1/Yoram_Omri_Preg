@@ -20,7 +20,7 @@
 ---
 # Taxa Changes
 
-GENUS LEVEL
+## GENUS LEVEL
 
 **Higher in pregnancy:** Mann–Whitney q < 0.05, log2FC (pregnancy vs. control) ≥ 0.5, and the median abundance is higher in pregnancy in at least 80% of all pregnancy–control project comparisons.  
 **Lower in pregnancy:** Mann–Whitney q < 0.05, log2FC (pregnancy vs. control) ≤ −0.5, and the median abundance is lower in pregnancy in at least 80% of all pregnancy–control project comparisons.  
@@ -32,13 +32,6 @@ GENUS LEVEL
 
 Pregnancy projects: **ERP020710** and **PRJNA1247940**.
 Control projects: **PRJEB37731** and **PRJNA48479**.
-
-The analysis follows the same logic as `taxa_changes_16S.py`:
-
-- Match exact genus names, including suffixes, independently of higher taxonomy ranks. Missing intermediate ranks are allowed if the genus is informative.
-- Test only genera shared and observed in all four projects; unmatched genera are excluded instead of filling missing columns with zeros.
-- Exclude samples with no informative genus abundance, then normalize each sample over all informative genera before restricting to matched genera.
-- Apply the tests and classification thresholds above. With two pregnancy and two control projects, the 80% consistency threshold requires agreement in all four project pairs for higher/lower categories.
 
 Results from the updated SG analysis: **358** tested genera, **127** pregnancy samples and **261** control samples. No samples were excluded for lacking informative genus abundance.
 
@@ -54,7 +47,6 @@ Source: [all_tested_taxa_results.csv](consistent_pregnancy_taxa_SG/all_tested_ta
 
 Total candidate taxa: **38**
 
-“Appears” and “disappears” describe pooled prevalence thresholds among matched genera, not absolute presence/absence or a causal pregnancy effect. Taxonomy and project differences remain potential confounders.
 
 Additional reports: [genus matching](consistent_pregnancy_taxa_SG/genus_matching_summary.csv), [project summary](consistent_pregnancy_taxa_SG/project_summary.csv), [excluded samples](consistent_pregnancy_taxa_SG/excluded_samples.csv), and [analysis notes](consistent_pregnancy_taxa_SG/analysis_notes.txt).
 
@@ -156,7 +148,124 @@ None
 **16S — disappears in pregnancy:**  
 None
 
+## Species level
 
+The species scripts use the same input projects, statistical tests, classification thresholds, and project consistency rules as the genus analyses above, with `TAXONOMY_LEVEL = 7`. Species labels must match exactly, including database suffixes; only species observed in every project of the respective analysis are tested. Samples without informative species abundance are excluded. Abundances are normalized over all informative species before matching.
+
+| Category | Shotgun | 16S |
+|---|---:|---:|
+| Tested species | 552 | 48 |
+| Higher in pregnancy | 40 | 5 |
+| Lower in pregnancy | 8 | 2 |
+| Appears in pregnancy | 5 | 0 |
+| Disappears in pregnancy | 0 | 0 |
+| Not candidate | 499 | 41 |
+| Total candidate species | 53 | 7 |
+
+### Shotgun — species
+
+Script: [taxa_changes_SG_species.py](taxa_changes_SG_species.py).
+
+Retained samples: **127** pregnancy and **261** control. Excluded for lacking informative species abundance: **0**.
+
+Sources: [all tested species](consistent_pregnancy_taxa_SG_species/all_tested_taxa_results.csv), [candidate species](consistent_pregnancy_taxa_SG_species/candidate_taxa.csv), [project summary](consistent_pregnancy_taxa_SG_species/project_summary.csv), [species matching](consistent_pregnancy_taxa_SG_species/species_matching_summary.csv), [excluded samples](consistent_pregnancy_taxa_SG_species/excluded_samples.csv), and [analysis notes](consistent_pregnancy_taxa_SG_species/analysis_notes.txt).
+
+**Higher in pregnancy (40):**
+
+- `Adlercreutzia_equolifaciens`
+- `Anaerobutyricum_hallii`
+- `Anaerobutyricum_soehngenii`
+- `Anaerostipes_hadrus`
+- `Bacteroides_stercoris`
+- `Bilophila_wadsworthia`
+- `Blautia_SGB4815`
+- `Blautia_faecis`
+- `Blautia_glucerasea`
+- `Blautia_massiliensis`
+- `Blautia_obeum`
+- `Blautia_wexlerae`
+- `Clostridia_bacterium_UC5_1_1D1`
+- `Clostridiaceae_bacterium`
+- `Clostridiaceae_bacterium_Marseille_Q4143`
+- `Clostridiales_bacterium_KLE1615`
+- `Clostridium_SGB4750`
+- `Clostridium_leptum`
+- `Clostridium_sp_AM22_11AC`
+- `Collinsella_aerofaciens`
+- `Coprococcus_catus`
+- `Dorea_formicigenerans`
+- `Dorea_longicatena`
+- `Dorea_sp_AF36_15AT`
+- `Eggerthella_lenta`
+- `Evtepia_gabavorous`
+- `Faecalibacillus_intestinalis`
+- `Flavonifractor_plautii`
+- `GGB9699_SGB15216`
+- `Holdemania_filiformis`
+- `Intestinimonas_butyriciproducens`
+- `Lachnospira_pectinoschiza`
+- `Lachnospiraceae_bacterium`
+- `Lacrimispora_amygdalina`
+- `Mediterraneibacter_faecis`
+- `Oliverpabstia_intestinalis`
+- `Roseburia_inulinivorans`
+- `Ruminococcus_gnavus`
+- `Streptococcus_salivarius`
+- `bacterium_210917_DFI_7_65`
+
+**Lower in pregnancy (8):**
+
+- `Alistipes_onderdonkii`
+- `Alistipes_putredinis`
+- `Bacteroides_ovatus`
+- `Bacteroides_uniformis`
+- `Faecalibacterium_sp_HTFF`
+- `Lachnospiraceae_bacterium_CLA_AA_H244`
+- `Odoribacter_splanchnicus`
+- `Oscillibacter_valericigenes`
+
+**Appears in pregnancy (5):**
+
+- `Allisonella_histaminiformans`
+- `Clostridium_SGB4751`
+- `Clostridium_sp_AF32_12BH`
+- `Megamonas_funiformis`
+- `Ruminococcus_sp_AF13_28`
+
+**Disappears in pregnancy (0):**
+
+None
+
+### 16S — species
+
+Script: [taxa_changes_16S_species.py](taxa_changes_16S_species.py).
+
+Retained samples: **893** pregnancy and **619** control. Excluded for lacking informative species abundance: **102**.
+
+Sources: [all tested species](consistent_pregnancy_taxa_16S_species/all_tested_taxa_results.csv), [candidate species](consistent_pregnancy_taxa_16S_species/candidate_taxa.csv), [project summary](consistent_pregnancy_taxa_16S_species/project_summary.csv), [species matching](consistent_pregnancy_taxa_16S_species/species_matching_summary.csv), [excluded samples](consistent_pregnancy_taxa_16S_species/excluded_samples.csv), and [analysis notes](consistent_pregnancy_taxa_16S_species/analysis_notes.txt).
+
+**Higher in pregnancy (5):**
+
+- `Akkermansia muciniphila_D_776786`
+- `Blautia_A_141781 wexlerae`
+- `Collinsella aerofaciens_F`
+- `Faecalibacterium prausnitzii`
+- `Gemmiger_A_73129 qucibialis`
+
+**Lower in pregnancy (2):**
+
+- `Anaerotignum faecicola`
+- `Hominimerdicola aceti`
+
+**Appears in pregnancy (0):**
+
+None
+
+**Disappears in pregnancy (0):**
+
+None
+
+Species labels are shown exactly as saved in the results. “Appears” and “disappears” refer to prevalence thresholds among matched species, not absolute presence/absence or a causal pregnancy effect.
 
 ---
 # fig 2A 
