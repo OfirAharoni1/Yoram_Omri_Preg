@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import re
 from scipy.stats import fisher_exact, mannwhitneyu
 from statsmodels.stats.multitest import multipletests
 from pathlib import Path
@@ -7,6 +8,7 @@ from pathlib import Path
 # =========================
 # Input files
 # rows = samples, columns = taxa
+# Pregnancy cohorts: ERP020710 and PRJNA1247940.
 # =========================
 
 PREGNANT_FILES = [
@@ -31,6 +33,7 @@ PRESENT_THR = 0
 
 # Genus level:
 # Bacteria;Phylum;Class;Order;Family;Genus
+# Intermediate ranks may be missing; the genus itself must be informative.
 TAXONOMY_LEVEL = 6
 
 ALPHA = 0.05
@@ -41,36 +44,36 @@ CONSISTENCY = 0.8
 
 
 def clean_taxon_name(taxon):
-    taxon = str(taxon).strip()
-    taxon = taxon.replace("|", ";").replace(",", ";")
-
-    prefixes = [
-        "k__", "p__", "c__", "o__", "f__", "g__", "s__",
-        "d__", "D_0__", "D_1__", "D_2__", "D_3__", "D_4__", "D_5__", "D_6__"
-    ]
-
-    parts = []
-    for part in taxon.split(";"):
+    """Preserve rank positions, including missing ranks, when cleaning names."""
+    ranks = ("k", "p", "c", "o", "f", "g", "s")
+    ranked = {}
+    plain = []
+    for part in re.split(r"[;,|]", str(taxon).strip()):
         part = part.strip()
-
-        for prefix in prefixes:
-            if part.startswith(prefix):
-                part = part.replace(prefix, "", 1)
-
-        if part and part.lower() not in {"nan", "none"}:
-            parts.append(part)
-
-    return ";".join(parts)
+        match = re.match(r"^(?:D_([0-6])__|([dkpcofgs])(?:__|:))\s*(.*)$",
+                         part, flags=re.IGNORECASE)
+        name = match.group(3) if match else part
+        name = re.sub(r"\s*\((?:0(?:\.\d+)?|1(?:\.0+)?)\)\s*$", "", name).strip()
+        if name.lower() in {"nan", "none"}:
+            name = ""
+        if match:
+            rank = ranks[int(match.group(1))] if match.group(1) is not None else match.group(2).lower()
+            ranked["k" if rank == "d" else rank] = name
+        else:
+            plain.append(name)
+    return ";".join(ranked.get(rank, "") for rank in ranks) if ranked else ";".join(plain)
 
 
 def keep_taxonomy_level(taxon, level=TAXONOMY_LEVEL):
-    parts = [p.strip() for p in str(taxon).split(";") if p.strip()]
-
-    # Keep only taxa that reach genus level
-    if len(parts) < level:
+    """Match exact genus names; retain database suffixes such as _A and _B."""
+    parts = [p.strip() for p in str(taxon).split(";")]
+    if len(parts) < level or not parts[level - 1]:
         return None
+    return parts[level - 1]
 
-    return ";".join(parts[:level])
+
+PROJECT_SUMMARY = []
+EXCLUDED_SAMPLES = []
 
 
 def remove_uninformative_taxa(df):
@@ -119,6 +122,8 @@ def load_project(path, group):
     # Remove taxonomy row if it exists
     df = df[~df.index.astype(str).str.lower().isin(["taxonomy", "taxa", "taxon"])]
 
+    input_samples = len(df)
+
     # Clean taxon names and keep only genus-level taxa
     new_cols = [
         keep_taxonomy_level(clean_taxon_name(c))
@@ -142,7 +147,22 @@ def load_project(path, group):
     # Remove empty taxa
     df = df.loc[:, df.sum(axis=0) > 0]
 
-    # Normalize to relative abundance
+    # A sample without classified genus abundance is not biological absence.
+    no_genus = df.sum(axis=1) <= 0
+    project = Path(path).stem
+    EXCLUDED_SAMPLES.extend(
+        {"project": project, "group": group, "sample_id": sample,
+         "reason": "no_informative_genus_abundance"}
+        for sample in df.index[no_genus]
+    )
+    df = df.loc[~no_genus].copy()
+    PROJECT_SUMMARY.append({
+        "project": project, "group": group, "input_samples": input_samples,
+        "excluded_samples": int(no_genus.sum()), "retained_samples": len(df),
+        "informative_genera": len(df.columns),
+    })
+
+    # Normalize over all informative genera, before restricting to matched genera.
     if NORMALIZE_ROWS:
         df = df.div(df.sum(axis=1).replace(0, np.nan), axis=0).fillna(0)
 
@@ -167,13 +187,49 @@ def load_project(path, group):
 # Load data
 # =========================
 
+print("Input projects:")
+for group, paths in (("Pregnant", PREGNANT_FILES), ("Control", CONTROL_FILES)):
+    for path in paths:
+        print(f"  {group}: {path}")
+
 preg_data = [load_project(f, "Pregnant") for f in PREGNANT_FILES]
 ctrl_data = [load_project(f, "Control") for f in CONTROL_FILES]
 
 preg_taxa_all_projects = set.intersection(*[x[2] for x in preg_data])
 ctrl_taxa_all_projects = set.intersection(*[x[2] for x in ctrl_data])
 
-taxa_to_test = sorted(preg_taxa_all_projects | ctrl_taxa_all_projects)
+# Require an observed exact genus match in every project. Missing columns
+# cannot distinguish biological absence from incompatible taxonomy labels.
+taxa_to_test = sorted(preg_taxa_all_projects & ctrl_taxa_all_projects)
+all_projects = preg_data + ctrl_data
+all_genera = sorted(set.union(*[item[2] for item in all_projects]))
+coverage = pd.DataFrame({
+    summary["project"]: [genus in item[2] for genus in all_genera]
+    for summary, item in zip(PROJECT_SUMMARY, all_projects)
+}, index=pd.Index(all_genera, name="genus"))
+coverage["included_in_tests"] = coverage.index.isin(taxa_to_test)
+coverage.to_csv(OUTDIR / "genus_matching_summary.csv")
+for summary in PROJECT_SUMMARY:
+    summary["matched_genera"] = len(taxa_to_test)
+    summary["unmatched_genera"] = summary["informative_genera"] - len(taxa_to_test)
+pd.DataFrame(PROJECT_SUMMARY).to_csv(OUTDIR / "project_summary.csv", index=False)
+pd.DataFrame(EXCLUDED_SAMPLES, columns=["project", "group", "sample_id", "reason"]).to_csv(
+    OUTDIR / "excluded_samples.csv", index=False)
+(OUTDIR / "analysis_notes.txt").write_text(
+    "Input files for this run:\n"
+    + "".join(f"Pregnant: {path}\n" for path in PREGNANT_FILES)
+    + "".join(f"Control: {path}\n" for path in CONTROL_FILES)
+    + "\n"
+    "Exploratory comparison using exact genus names shared and observed in every project.\n"
+    "Higher taxonomy ranks are ignored; genus suffixes are preserved.\n"
+    "Unmatched genera are excluded, not filled with biological zeros.\n"
+    "Samples with no informative genus abundance are excluded.\n"
+    "Abundances are normalized over all informative genera before matching.\n"
+    "Taxonomy and project differences remain potential confounders.\n"
+    "Appears/disappears categories describe pooled prevalence thresholds among matched genera, "
+    "not absolute presence/absence or a causal pregnancy effect.\n"
+)
+print(pd.DataFrame(PROJECT_SUMMARY).to_string(index=False))
 
 print("\nTaxa in all pregnancy projects:", len(preg_taxa_all_projects))
 print("Taxa in all control projects:", len(ctrl_taxa_all_projects))
@@ -188,7 +244,7 @@ dfs = []
 metas = []
 
 for df, meta, _ in preg_data + ctrl_data:
-    dfs.append(df.reindex(columns=taxa_to_test, fill_value=0))
+    dfs.append(df.loc[:, taxa_to_test])
     metas.append(meta)
 
 data = pd.concat(dfs, axis=0)
@@ -328,4 +384,20 @@ res[res["category"] != "not_candidate"].to_csv(OUTDIR / "candidate_taxa.csv", in
 print("\nDone")
 print("Tested taxa:", len(res))
 print(res["category"].value_counts())
+print("\nTaxa by category:")
+for category in (
+    "appears_in_pregnancy",
+    "disappears_in_pregnancy",
+    "higher_in_pregnancy",
+    "lower_in_pregnancy",
+    "not_candidate",
+):
+    taxa = sorted(res.loc[res["category"] == category, "taxon"])
+    print(f"\n{category} ({len(taxa)}):")
+    if taxa:
+        for taxon in taxa:
+            print(f"  - {taxon}")
+    else:
+        print("  (none)")
+
 print("Saved to:", OUTDIR)

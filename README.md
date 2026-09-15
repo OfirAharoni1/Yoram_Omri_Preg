@@ -28,17 +28,35 @@ GENUS LEVEL
 **Disappears in pregnancy:** Fisher q < 0.05, prevalence ≥ 20% in controls, and prevalence ≤ 2% in pregnancy.  
 **Not candidate:** A tested taxon that does not meet any of the criteria above.  
 
-### Shotgun 
+### Shotgun
 
-Tested taxa after cleaning(genus + remove undefined): **688**
+Pregnancy projects: **ERP020710** and **PRJNA1247940**.
+Control projects: **PRJEB37731** and **PRJNA48479**.
+
+The analysis follows the same logic as `taxa_changes_16S.py`:
+
+- Match exact genus names, including suffixes, independently of higher taxonomy ranks. Missing intermediate ranks are allowed if the genus is informative.
+- Test only genera shared and observed in all four projects; unmatched genera are excluded instead of filling missing columns with zeros.
+- Exclude samples with no informative genus abundance, then normalize each sample over all informative genera before restricting to matched genera.
+- Apply the tests and classification thresholds above. With two pregnancy and two control projects, the 80% consistency threshold requires agreement in all four project pairs for higher/lower categories.
+
+Results from the updated SG analysis: **358** tested genera, **127** pregnancy samples and **261** control samples. No samples were excluded for lacking informative genus abundance.
+
+Source: [all_tested_taxa_results.csv](consistent_pregnancy_taxa_SG/all_tested_taxa_results.csv) and [candidate_taxa.csv](consistent_pregnancy_taxa_SG/candidate_taxa.csv).
 
 | Category | Number of taxa |
 |---|---:|
-| Higher in pregnancy | 33 |
+| Higher in pregnancy | 30 |
 | Lower in pregnancy | 6 |
-| Appears in pregnancy | 7 |
+| Appears in pregnancy | 2 |
 | Disappears in pregnancy | 0 |
-| Not candidate | 642 |
+| Not candidate | 320 |
+
+Total candidate taxa: **38**
+
+“Appears” and “disappears” describe pooled prevalence thresholds among matched genera, not absolute presence/absence or a causal pregnancy effect. Taxonomy and project differences remain potential confounders.
+
+Additional reports: [genus matching](consistent_pregnancy_taxa_SG/genus_matching_summary.csv), [project summary](consistent_pregnancy_taxa_SG/project_summary.csv), [excluded samples](consistent_pregnancy_taxa_SG/excluded_samples.csv), and [analysis notes](consistent_pregnancy_taxa_SG/analysis_notes.txt).
 
 
 ### 16S
@@ -62,11 +80,56 @@ Total candidate taxa: **13**
 
 ### Main taxa
 
-**Shotgun — higher in pregnancy:**  
-Romboutsia, Flavonifractor, Enterocloster, Intestinibacter, Streptococcus, Lachnoclostridium, Holdemania, Eggerthella, Anaerobutyricum, Anaerostipes, Blautia, Roseburia
+**Shotgun — higher in pregnancy:**
 
-**Shotgun — lower in pregnancy:**  
-Odoribacter, Oscillibacter, Bacteroides, Akkermansia, Alistipes, Parabacteroides
+- Adlercreutzia
+- Anaerobutyricum
+- Anaerostipes
+- Anaerotignum
+- Bilophila
+- Blautia
+- Clostridium
+- Collinsella
+- Dorea
+- Eggerthella
+- Enterocloster
+- Eubacterium
+- Evtepia
+- Faecalibacillus
+- Flavonifractor
+- GGB9699
+- Gemmiger
+- Holdemania
+- Hydrogenoanaerobacterium
+- Intestinimonas
+- Lachnoclostridium
+- Lacrimispora
+- Lentihominibacter
+- Mediterraneibacter
+- Oliverpabstia
+- Phascolarctobacterium
+- Pseudoflavonifractor
+- Roseburia
+- Streptococcus
+- Vescimonas
+
+**Shotgun — lower in pregnancy:**
+
+- Akkermansia
+- Alistipes
+- Bacteroides
+- Odoribacter
+- Oscillibacter
+- Parabacteroides
+
+**Shotgun — appears in pregnancy:**
+
+- Allisonella
+- Megamonas
+
+**Shotgun — disappears in pregnancy:**
+
+None
 
 **16S — higher in pregnancy:**  
 
@@ -133,6 +196,18 @@ for each dataset separately.
 ---
 
 # Python Files Overview
+
+- `taxa_changes_SG.py`
+  Input: the four formatted SG abundance tables in `datasets_after_yamas/SG/` listed in the Shotgun section.
+  Analysis: exact genus matching across all projects, sample filtering, relative abundance normalization, Fisher and Mann–Whitney tests, separate BH-FDR corrections, and pregnancy-related classification.
+  Output in `consistent_pregnancy_taxa_SG/`:
+  - `all_tested_taxa_results.csv`
+  - `candidate_taxa.csv`
+  - `genus_matching_summary.csv`
+  - `project_summary.csv`
+  - `excluded_samples.csv`
+  - `analysis_notes.txt`
+
 
 - `preprocess_16S.py`  
   Input: from Yamas- otu.csv + taxonomy.csv  
