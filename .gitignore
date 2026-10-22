@@ -32,4 +32,7 @@ __pycache__/
 # Ignore unnecessary folders
 archive_code/
 updated_gimic_package/
-updated_miMic_test/
+# Keep the local miMic implementation and its taxonomic-tree helper.
+updated_miMic_test/*
+!updated_miMic_test/miMic_test.py
+!updated_miMic_test/tax_tree_create.py

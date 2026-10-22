@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import glob
 import pandas as pd
@@ -6,8 +7,9 @@ from matplotlib.patches import Rectangle, Patch
 import numpy as np
 
 # ===== SETTINGS =====
-input_folder = "/home/aharonox/Yoram_Omri_Preg/datasets_after_yamas/SG"
-output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots/SG"
+BASE_DIR = Path(__file__).resolve().parent
+input_folder = BASE_DIR / "datasets_after_yamas/SG"
+output_folder = BASE_DIR / "1B_plots/SG"
 os.makedirs(output_folder, exist_ok=True)
 
 sample_id_col = "SampleID"
@@ -40,7 +42,7 @@ def extract_phylum(taxon_name):
     return None
 
 
-def prepare_relative_phylum_table(df, sample_id_col, group_col):
+def prepare_relative_phylum_table(df, sample_id_col, group_col, file_name=""):
     """
     Prepare relative abundance table at phylum level for one dataset.
     Returns:
@@ -52,7 +54,11 @@ def prepare_relative_phylum_table(df, sample_id_col, group_col):
         df = df.rename(columns={df.columns[0]: sample_id_col})
 
     if group_col not in df.columns:
-        return None, None
+        labels = [g for g in ("Control", "Pregnant") if g in file_name.split("_")]
+        if len(labels) != 1:
+            raise ValueError(f"Cannot infer group from {file_name}")
+        df = df.copy()
+        df[group_col] = labels[0]
 
     df = df.set_index(sample_id_col)
 
@@ -77,6 +83,10 @@ def prepare_relative_phylum_table(df, sample_id_col, group_col):
     # Collapse to phylum level
     phylum_map = {}
     for col in abundance.columns:
+        # These MetaPhlAn tables contain all ranks. Use only phylum rows
+        # (transposed to columns), so descendants are not counted again.
+        if not str(col).split(",")[-1].strip().startswith("p__"):
+            continue
         phylum = extract_phylum(col)
         if phylum is not None:
             phylum_map[col] = phylum
@@ -91,12 +101,21 @@ def prepare_relative_phylum_table(df, sample_id_col, group_col):
     abundance_phylum = abundance_phylum.T.groupby(level=0).sum().T
 
     # Convert to relative abundance (%)
+    if not np.isfinite(abundance_phylum.to_numpy()).all() or (abundance_phylum < 0).any().any():
+        raise ValueError(f"Invalid phylum abundances in {file_name}")
+    valid = abundance_phylum.sum(axis=1) > 0
+    abundance_phylum = abundance_phylum.loc[valid]
+    groups = groups.loc[valid]
+    if abundance_phylum.empty:
+        return None, None
     rel = abundance_phylum.div(abundance_phylum.sum(axis=1), axis=0) * 100
 
     return rel, groups
 
 
-csv_files = glob.glob(os.path.join(input_folder, "*.csv"))
+csv_files = sorted(glob.glob(os.path.join(input_folder, "*_SG_formatted.csv")))
+if not csv_files:
+    raise FileNotFoundError(f"No formatted abundance tables found in {input_folder}")
 print(f"Found {len(csv_files)} CSV files")
 
 # ===== BUILD GLOBAL COLOR MAP =====
@@ -107,7 +126,7 @@ for file_path in csv_files:
     print(f"Scanning for colors: {file_name}")
 
     df = pd.read_csv(file_path)
-    rel, groups = prepare_relative_phylum_table(df, sample_id_col, group_col)
+    rel, groups = prepare_relative_phylum_table(df, sample_id_col, group_col, file_name)
 
     if rel is None:
         print(f"Skipping {file_name} in color-map stage")
@@ -144,7 +163,7 @@ for file_path in csv_files:
     print(f"Processing: {file_name}")
 
     df = pd.read_csv(file_path)
-    rel, groups = prepare_relative_phylum_table(df, sample_id_col, group_col)
+    rel, groups = prepare_relative_phylum_table(df, sample_id_col, group_col, file_name)
 
     if rel is None:
         print(f"Skipping {file_name}: could not prepare relative phylum table")

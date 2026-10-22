@@ -1,3 +1,4 @@
+from pathlib import Path
 import os, glob
 import numpy as np
 import pandas as pd
@@ -5,30 +6,21 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Patch
 
 # ===== SETTINGS =====
-input_folder = "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP"
-output_folder = "/home/aharonox/Yoram_Omri_Preg/1B_plots/16S"
+BASE_DIR = Path(__file__).resolve().parent
+input_folder = BASE_DIR / "datasets_after_MIPMLP"
+output_folder = BASE_DIR / "1B_plots/16S"
 os.makedirs(output_folder, exist_ok=True)
 
 top_n = 12
 
 # ===== LOAD FILES =====
-csv_files = sorted(glob.glob(os.path.join(input_folder, "*.csv")))
+csv_files = sorted(glob.glob(os.path.join(input_folder, "*_16S_formatted.csv")))
 
-# Add Omri project manually because it is inside a subfolder.
-# For Fig 1B we use only the phylum-normalized table.
-extra_csv_files = [
-    "/home/aharonox/Yoram_Omri_Preg/datasets_after_MIPMLP/omri/omri_stool_Pregnant_16S_phylum_normalized.csv"
-]
+# Omri is PRJEB58050 and is already included above under its current name.
+# Do not load the legacy omri/ tables as an additional dataset.
 
-for f in extra_csv_files:
-    if os.path.exists(f):
-        csv_files.append(f)
-    else:
-        print(f"WARNING: file not found: {f}")
-
-csv_files = sorted(set(csv_files))
-
-
+if not csv_files:
+    raise FileNotFoundError(f"No formatted abundance tables found in {input_folder}")
 print(f"Found {len(csv_files)} CSV files")
 
 data = {}
@@ -42,7 +34,18 @@ for f in csv_files:
     rel.columns = rel.columns.str.replace(r"\s*;\s*", ";", regex=True)
 
     # Option: drop "Bacteria" and "Unassigned" if they exist, then re-normalize
-    rel = rel.drop(columns=["Bacteria", "Unassigned"], errors="ignore")
+    rel = rel.drop(columns=["Bacteria", "Archaea", "Unassigned", "Unclassified"], errors="ignore")
+    # Standardize phylum labels with or without taxonomy rank prefixes.
+    rel.columns = [c.split(";")[-1].removeprefix("p__") for c in rel.columns]
+    rel = rel.T.groupby(level=0, sort=False).sum().T
+    if not np.isfinite(rel.to_numpy(dtype=float)).all() or (rel < 0).any().any():
+        raise ValueError(f"Invalid abundance values in {f}")
+    valid = rel.sum(axis=1) > 0
+    if not valid.all():
+        print(f"Dropping {(~valid).sum()} zero-sum samples from {file_name}")
+    rel = rel.loc[valid]
+    if rel.empty:
+        raise ValueError(f"No nonzero phylum abundances in {f}")
     rel = rel.div(rel.sum(axis=1), axis=0) * 100
 
 
@@ -98,8 +101,8 @@ for file_name, rel in data.items():
     rel_top = rel_top[final_order]
 
     # sort samples like original code
-    if "Bacteria;Firmicutes" in rel_top.columns:
-        rel_top = rel_top.sort_values(by="Bacteria;Firmicutes", ascending=False)
+    if "Firmicutes" in rel_top.columns:
+        rel_top = rel_top.sort_values(by="Firmicutes", ascending=False)
     else:
         rel_top = rel_top.sort_values(by=rel_top.columns[0], ascending=False)
 

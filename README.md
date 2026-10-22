@@ -372,14 +372,48 @@ Note:
   Note: 
 
 - `fig_1E_16S.py`  
-  Input: formatted csv (going over 16S folder)  
-  Output: miMic / SAMBA outputs and plots 
-  Note: taxonomy level 2
+  Input: the five prepared abundance tables in `datasets_after_MIPMLP/`:
+  controls PRJNA669650, PRJNA388263, PRJNA545251; pregnancy PRJEB58050, PRJNA1254708.
+  Run: `conda activate mipmlp_env`, then `python fig_1E_16S.py`.
+  Output: `1E_16S/Control_VS_Pregnant_five_projects/`, including inputs,
+  miMic results and `plots/correlations_tree.{png,svg,pdf}`.
+  Uses exact full taxonomy paths, retaining database suffixes. Normalizes over
+  each sample's original abundance table before intersecting taxa. Among shared
+  paths, removes ancestors of other shared paths because SAMBA requires one
+  column per tree leaf; it does not invent species for higher-rank entries.
+  Excludes entirely missing rows and samples with no matched abundance.
+  Current input: 64 leaf paths, 619 controls and 887 pregnancy samples;
+  1 entirely missing row and 107 samples without matched abundance excluded.
+  The pooled comparison does not adjust for project effects and is distinct
+  from the project-consistency analysis in `taxa_changes_16S.py`.
+  The local `updated_miMic_test` uses the calculated apriori p-value (the supplied
+  implementation overwrote it with 0.04). Its circular plot has bounded marker
+  sizes, original labels, family backgrounds and a fixed 180 mm export width.
+  Qt uses Matplotlib's bundled font and saves without opening a GUI window.
+  Environment dependencies: `samba-metric`, `ete3`, `PyQt5`; Linux Conda libraries
+  `libgl`, `fontconfig`, `xorg-libxext`.
 
 - `fig_1E_16S_family.py`  
   Input: formatted csv (going over 16S folder)  
   Output: miMic / SAMBA outputs and plots 
   Note: unite by family level
+
+- `fig_1E_SG.py`
+  Shotgun counterpart of `fig_1E_16S.py`, using the four formatted tables in
+  `datasets_after_yamas/SG/`: controls PRJEB37731 and PRJNA48479; pregnancy
+  ERP020710 and PRJNA1247940. Run `python fig_1E_SG.py` in `mipmlp_env`.
+  Uses complete species paths only, excluding cumulative higher-rank columns
+  to avoid counting the same abundance multiple times. Normalizes over each
+  sample's species before exact full-path matching across the four projects.
+  Uses the same miMic tests, thresholds and circular tree renderer as the 16S
+  script. Outputs are in `1E_SG/Control_VS_Pregnant_four_projects/`, including
+  `plots/correlations_tree.{png,svg,pdf}`. The pooled comparison does not adjust
+  for project effects or apply the cross-project consistency rules of
+  `taxa_changes_SG.py`.
+  Current input: 558 shared species paths and 388 samples (261 controls,
+  127 pregnancy), with no excluded samples. The local miMic ancestor filter
+  matches the taxonomy separator as well as the name, so species whose names
+  are prefixes of other species are retained as distinct leaves.
 
 - `fig_1E_16S_genus.py`  
   Input: formatted csv (going over 16S folder)  
