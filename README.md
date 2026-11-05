@@ -326,168 +326,82 @@ for each dataset separately.
 
 # Python Files Overview
 
-- `taxa_changes_SG.py`
-  Input: the four formatted SG abundance tables in `datasets_after_yamas/SG/` listed in the Shotgun section.
-  Analysis: exact genus matching across all projects, sample filtering, relative abundance normalization, Fisher and Mann–Whitney tests, separate BH-FDR corrections, and pregnancy-related classification.
-  Output in `consistent_pregnancy_taxa_SG/`:
-  - `all_tested_taxa_results.csv`
-  - `candidate_taxa.csv`
-  - `genus_matching_summary.csv`
-  - `project_summary.csv`
-  - `excluded_samples.csv`
-  - `analysis_notes.txt`
-
+- `1_set_cols_per_ds.py`  
+  Input: A raw YaMAS shotgun CSV selected in the script.  
+  Output: A CSV with the first column renamed to SampleID, saved beside the input as *_formatted.csv.
 
 - `preprocess_16S.py`  
-  Input: from Yamas- otu.csv + taxonomy.csv  
-  Output: formatted csv for the pipeline: first column SampleId, rest taxa
-       
-  Note: *need to add group to output name*    
-  Note: suits to this structure:  
-  Yoram_Omri_Preg/datasets_after_yamas/16S/  
-│
-├── PRJNA669650/  
-│   ├── otu_PRJNA669650.csv  
-│   └── taxonomy_PRJNA669650.csv  
-│  
-├── PRJNA1254708/  
-│   ├── otu_PRJNA1254708.csv  
-│   └── taxonomy_PRJNA1254708.csv  
-
-- `1_set_cols_per_ds.py`  
-Input: csv from Yamas  (SG)  
-Output: formatted csv for the pipeline: first column   SampleId, second group (Pregnant/Control)  
-Note:
+  Input: YaMAS OTU and taxonomy CSV pairs in datasets_after_yamas/16S/.  
+  Output: Raw and relative-abundance taxonomy tables in datasets_after_MIPMLP/ (*_GROUP_16S.csv and *_GROUP_16S_formatted.csv).
 
 - `fig_1B_full_SG.py`  
-  Input: formatted csv  
-  Output: stackbar for each csv + violin plot for all  
-  Note:  
+  Input: Formatted shotgun abundance CSVs in datasets_after_yamas/SG/.  
+  Output: Phylum composition stacked bars, a combined violin plot, and violin observations CSV in 1B_plots/SG/.
+
+- `fig_1B_SG_family.py`  
+  Input: Formatted shotgun abundance CSVs in datasets_after_yamas/SG/.  
+  Output: Family composition stacked bars, a combined violin plot, and violin observations CSV in 1B_plots/SG_family/.
 
 - `fig_1B_16S.py`  
-  Input: formatted csv after MIPMLP  
-  Output: stackbar for each csv + violin plot for all  
-  Note: 
+  Input: Relative-abundance *_16S_formatted.csv tables in datasets_after_MIPMLP/.  
+  Output: Phylum composition stacked bars and a combined violin plot in 1B_plots/16S/.
 
-- `fig_1C_16S.py`    
-  Input: formatted csv   
-  Output: shannon plot   
-  Note:  
+- `fig_1C_SG.py`  
+  Input: Four formatted shotgun abundance tables from datasets_after_yamas/SG/.  
+  Output: A Shannon diversity comparison plot in 1C_plots/1C_SG.png.
 
-
-- `fig_1C_SG.py`    
-  Input: formatted csv   
-  Output: shannon plot   
-  Note: 
-
+- `fig_1C_16S.py`  
+  Input: YaMAS OTU tables for PRJNA669650 and PRJNA1254708, plus the prepared Omri stool table.  
+  Output: A Shannon diversity comparison plot in 1C_plots/1C_16S.png.
 
 - `fig_1D_SG.py`  
-  Input: formatted csv (going over SG folder)  
-  Output: GIMIC plot   
-  Note: 
+  Input: Formatted shotgun abundance CSVs in datasets_after_yamas/SG/.  
+  Output: GIMIC input and group CSVs in 1D_SG/Control_VS_Pregnant/ and a comparison plot in 1D_SG/figure_plots/.
 
 - `fig_1D_16S.py`  
-  Input: formatted csv (going over 16S folder)  
-  Output: GIMIC plot   
-  Note: 
+  Input: YaMAS OTU/taxonomy pairs for PRJNA669650 and PRJNA1254708, plus the prepared Omri stool table.  
+  Output: GIMIC input and group CSVs in 1D_16S/Control_VS_Pregnant/ and a comparison plot in 1D_16S/figure_plots/.
 
-- `compare_1E_taxa.py`
-  Run `python compare_1E_taxa.py` in `mipmlp_env` after the pooled and pairwise
-  analyses. Compares the existing figure leaf lists without rerunning statistics.
-  Outputs: `1E_16S/comparison_tables_p0.05/` and `1E_SG/comparison_tables_p0.01/`.
-  `taxa_comparison.csv` and the searchable `taxa_comparison.html` show the union
-  of taxa displayed in at least one figure, one column per comparison.
-  Full taxonomy paths (including database suffixes) identify rows; matching
-  accounts for SAMBA's removal of spaces. Hover over HTML taxon names for paths.
-  Cells distinguish higher/lower in pregnancy, not selected for that figure,
-  and not an input leaf for that comparison. An absent input leaf may still
-  correspond to an internal tree node; it does not mean biological absence.
-  `p_values.csv` contains saved miMic p-values for selected leaves only; blank
-  values are unavailable, not 0 or 1. Corrections follow miMic within each
-  comparison, not one global correction across all comparisons.
-  `all_input_taxa.csv` also includes taxa never selected; `results_long.csv`
-  contains source p-values/scores and `comparisons.csv` links to results/figures.
-  `significant_pairs` counts appearances, not consistency of direction or an
-  additional selection criterion. Figure labels are validated against results.
+- `fig_1E_SG.py`  
+  Input: Four formatted shotgun abundance tables from datasets_after_yamas/SG/.  
+  Output: miMic results, tree plots, logs, and a summary for four pairs in 1E_SG/pairs_p0.01/; --pooled saves the combined comparison.
 
 - `fig_1E_16S.py`  
-  Input: the five prepared abundance tables in `datasets_after_MIPMLP/`:
-  controls PRJNA669650, PRJNA388263, PRJNA545251; pregnancy PRJEB58050, PRJNA1254708.
-  Run: `conda activate mipmlp_env`, then `python fig_1E_16S.py`.
-  Default: six separate comparisons (each pregnancy project vs each control
-  project), with `ALPHA = 0.05`. Outputs: `1E_16S/pairs_p0.05/`.
-  Each pair uses only its own two projects' shared columns and has its own
-  inputs, `run.log`, miMic results and `plots/correlations_tree.{png,svg,pdf}`.
-  `comparison_summary.csv` indexes all pairs, sample/taxon counts and PDF paths.
-  Use `--pooled` to reproduce the earlier combined analysis in
-  `1E_16S/Control_VS_Pregnant_five_projects/`.
-  Uses exact full taxonomy paths, retaining database suffixes. Normalizes over
-  each sample's original abundance table before intersecting taxa. Among shared
-  paths, removes ancestors of other shared paths because SAMBA requires one
-  column per tree leaf; it does not invent species for higher-rank entries.
-  Excludes entirely missing rows and samples with no matched abundance.
-  Earlier pooled input: 64 leaf paths, 619 controls and 887 pregnancy samples;
-  1 entirely missing row and 107 samples without matched abundance excluded.
-  The pooled comparison does not adjust for project effects and is distinct
-  from the project-consistency analysis in `taxa_changes_16S.py`.
-  The local `updated_miMic_test` uses the calculated apriori p-value (the supplied
-  implementation overwrote it with 0.04). Its circular plot has bounded marker
-  sizes, original labels, family backgrounds and a fixed 180 mm export width.
-  Qt uses Matplotlib's bundled font and saves without opening a GUI window.
-  Environment dependencies: `samba-metric`, `ete3`, `PyQt5`; Linux Conda libraries
-  `libgl`, `fontconfig`, `xorg-libxext`.
+  Input: Five prepared 16S abundance tables from datasets_after_MIPMLP/.  
+  Output: miMic results, tree plots, logs, and a summary for six pairs in 1E_16S/pairs_p0.05/; --pooled saves the combined comparison.
 
-- `fig_1E_16S_family.py`  
-  Input: formatted csv (going over 16S folder)  
-  Output: miMic / SAMBA outputs and plots 
-  Note: unite by family level
+- `mimic_pairwise.py`  
+  Input: A comparison function, control/pregnancy project lists, output folder, and significance threshold.  
+  Output: Separate comparison folders with run.log files and comparison_summary.csv in the supplied output folder.
 
-- `fig_1E_SG.py`
-  Shotgun counterpart of `fig_1E_16S.py`, using the four formatted tables in
-  `datasets_after_yamas/SG/`: controls PRJEB37731 and PRJNA48479; pregnancy
-  ERP020710 and PRJNA1247940. Run `python fig_1E_SG.py` in `mipmlp_env`.
-  Uses complete species paths only, excluding cumulative higher-rank columns
-  to avoid counting the same abundance multiple times. Normalizes over each
-  sample's species before exact full-path matching within each comparison.
-  Uses the same miMic tests and circular tree renderer as the 16S script, with
-  a stricter significance threshold `ALPHA = 0.01` for both analysis and plotting.
-  Default: four separate comparisons (each pregnancy project vs each control
-  project). Outputs are in `1E_SG/pairs_p0.01/`, with a folder per pair containing
-  inputs, `run.log`, results and `plots/correlations_tree.{png,svg,pdf}`.
-  `comparison_summary.csv` indexes all pairs, sample/taxon counts and PDF paths.
-  Use `--pooled` for the earlier combined comparison in
-  `1E_SG/Control_VS_Pregnant_four_projects_p0.01/`. The pooled comparison does not adjust
-  for project effects or apply the cross-project consistency rules of
-  `taxa_changes_SG.py`.
-  The earlier 0.05 outputs remain in `1E_SG/Control_VS_Pregnant_four_projects/`.
-  Earlier pooled input: 558 shared species paths and 388 samples (261 controls,
-  127 pregnancy), with no excluded samples. The local miMic ancestor filter
-  matches the taxonomy separator as well as the name, so species whose names
-  are prefixes of other species are retained as distinct leaves.
+- `compare_1E_taxa.py`  
+  Input: Existing pooled and pairwise 1E inputs, miMic results, and comparison summaries for shotgun and 16S.  
+  Output: Taxon comparison CSVs and searchable HTML in 1E_SG/comparison_tables_p0.01/ and 1E_16S/comparison_tables_p0.05/.
 
-- `fig_1E_16S_genus.py`  
-  Input: formatted csv (going over 16S folder)  
-  Output: miMic / SAMBA outputs and plots 
-  Note: unite by genus level
+- `taxa_changes_SG.py`  
+  Input: Four formatted shotgun abundance tables from datasets_after_yamas/SG/.  
+  Output: Genus-level statistics, pregnancy candidate taxa, and matching/sample reports in consistent_pregnancy_taxa_SG/.
+
+- `taxa_changes_16S.py`  
+  Input: Five prepared 16S abundance tables from datasets_after_MIPMLP/.  
+  Output: Genus-level statistics, pregnancy candidate taxa, and matching/sample reports in consistent_pregnancy_taxa_16S/.
+
+- `taxa_changes_SG_species.py`  
+  Input: Four formatted shotgun abundance tables from datasets_after_yamas/SG/.  
+  Output: Species-level statistics, pregnancy candidate taxa, and matching/sample reports in consistent_pregnancy_taxa_SG_species/.
+
+- `taxa_changes_16S_species.py`  
+  Input: Five prepared 16S abundance tables from datasets_after_MIPMLP/.  
+  Output: Species-level statistics, pregnancy candidate taxa, and matching/sample reports in consistent_pregnancy_taxa_16S_species/.
 
 - `fig_2A.py`  
-  Input:
-  1. Microbiome table:
-    - rows = samples
-    - columns = microbial taxa / bacteria
-    - first column = sample IDs / index
+  Input: Per-project microbiome abundance CSVs and matching sample metadata CSVs.  
+  Output: Correlation tables, significant-correlation counts, and PNG/PDF plots per project, plus combined CSVs, in fig_2A/.
 
-  2. Metadata table:
-    - rows = samples
-    - columns = metadata variables
-    - first column = sample IDs / index
+- `updated_miMic_test/miMic_test.py`  
+  Input: SAMBA outputs, sample group labels, and miMic analysis/plot settings supplied by the 1E scripts.  
+  Output: miMic statistical result CSVs and taxonomic tree/interaction plots in the supplied comparison folder.
 
-  Output:  
-  For each project, the script saves:
-  - all_microbe_metadata_correlations.csv
-  - significant_correlation_counts.csv
-  - number_of_significant_correlations.png
-  - number_of_significant_correlations.pdf
-
-  It also saves one combined table across all projects.  
-  
+- `updated_miMic_test/tax_tree_create.py`  
+  Input: A pandas Series of taxonomy paths and abundance values.  
+  Output: An in-memory NetworkX directed taxonomy graph with abundance values; no files are written.
