@@ -1,6 +1,11 @@
-"""Figure 1E: miMic Control vs Pregnant, using five prepared abundance tables.
+"""Figure 1E: pairwise miMic Control vs Pregnant across five 16S projects.
 
-Run in mipmlp_env: python fig_1E_16S.py
+# ברירת המחדל היא השוואות בזוגות: כל פרויקט היריון מול כל פרויקט ביקורת.
+# הניתוח המאוחד של כל חמשת הפרויקטים נשמר ומופעל באמצעות --pooled.
+# הרצה בסביבת mipmlp_env:
+# זוגות: python fig_1E_16S.py
+# כלל הפרויקטים יחד: python fig_1E_16S.py --pooled
+
 Taxonomy paths and database suffixes are matched exactly; no invented species.
 Abundances are normalized before matching, over each sample's original taxa.
 """
@@ -17,6 +22,7 @@ from updated_miMic_test.miMic_test import apply_mimic
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "datasets_after_MIPMLP"
+ALPHA = 0.05
 OUT_DIR = BASE_DIR / "1E_16S/Control_VS_Pregnant_five_projects"
 PROJECTS = {
     "Control": ["PRJNA669650", "PRJNA388263", "PRJNA545251"],
@@ -45,9 +51,9 @@ def load_table(project, group):
     return df
 
 
-def main():
+def run_comparison(project_groups=PROJECTS, output_dir=OUT_DIR):
     tables, tags = [], []
-    for label, (group, projects) in enumerate(PROJECTS.items()):
+    for label, (group, projects) in enumerate(project_groups.items()):
         for project in projects:
             table = load_table(project, group)
             tables.append(table)
@@ -69,24 +75,37 @@ def main():
     if not processed.index.is_unique or tag.Tag.nunique() != 2:
         raise ValueError("Need unique sample IDs and samples in both groups.")
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    processed.to_csv(OUT_DIR / "processed_for_mimic.csv")
-    tag.to_csv(OUT_DIR / "tag.csv")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    processed.to_csv(output_dir / "processed_for_mimic.csv")
+    tag.to_csv(output_dir / "tag.csv")
     print(f"miMic input: {processed.shape}; groups: {tag.Tag.value_counts().to_dict()}")
     np.random.seed(0)
     tax, samba_output = apply_mimic(
-        str(OUT_DIR), tag, eval="man", threshold_p=0.05,
+        str(output_dir), tag, eval="man", threshold_p=ALPHA,
         processed=processed, apply_samba=True, save=True,
     )
     if tax not in (None, "nosignificant"):
         apply_mimic(
-            str(OUT_DIR), tag, mode="plot", tax=tax, eval="man", sis="fdr_bh",
-            samba_output=samba_output, save=True, threshold_p=0.05, THRESHOLD_edge=0.5,
+            str(output_dir), tag, mode="plot", tax=tax, eval="man", sis="fdr_bh",
+            samba_output=samba_output, save=True, threshold_p=ALPHA, THRESHOLD_edge=0.5,
         )
-        print(f"Figures saved to {OUT_DIR / 'plots'}")
+        print(f"Figures saved to {output_dir / 'plots'}")
     else:
         print("No significant taxa; no cladogram generated.")
 
+    return {"samples": len(processed), "control_samples": int((tag.Tag == 0).sum()),
+            "pregnant_samples": int((tag.Tag == 1).sum()), "taxa_tested": processed.shape[1],
+            "starting_taxonomy": tax}
+
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    from mimic_pairwise import run_pairwise
+
+    parser = argparse.ArgumentParser(description="miMic: one pregnancy project vs one control project")
+    parser.add_argument("--pooled", action="store_true", help="Run the original pooled comparison")
+    args = parser.parse_args()
+    if args.pooled:
+        run_comparison()
+    else:
+        run_pairwise(run_comparison, PROJECTS, BASE_DIR / "1E_16S" / f"pairs_p{ALPHA:g}", ALPHA)
